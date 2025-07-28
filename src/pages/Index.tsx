@@ -31,48 +31,24 @@ const Index = () => {
             alt="Tropical paradise in Sri Lanka showcasing the natural beauty that awaits travelers"
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-hero opacity-75" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
         </div>
-
-      {/* Floating Elements - Responsive */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <Heart 
-          className="absolute top-1/4 left-1/4 w-8 h-8 text-secondary/30 animate-float hidden sm:block" 
-          style={{ animationDelay: '0s' }}
-        />
-        <Camera 
-          className="absolute top-1/3 right-1/4 w-6 h-6 text-accent/40 animate-drift hidden md:block" 
-          style={{ animationDelay: '2s' }}
-        />
-        <TreePine 
-          className="absolute bottom-1/3 left-1/5 w-10 h-10 text-primary/20 animate-float hidden lg:block" 
-          style={{ animationDelay: '4s' }}
-        />
-        <Sun 
-          className="absolute top-1/5 right-1/3 w-7 h-7 text-accent/35 animate-pulse-glow hidden sm:block" 
-          style={{ animationDelay: '1s' }}
-        />
-        <Star 
-          className="absolute bottom-1/4 right-1/5 w-5 h-5 text-secondary/25 animate-drift hidden md:block" 
-          style={{ animationDelay: '3s' }}
-        />
-      </div>
 
         {/* Main Content */}
         <div className="relative z-10 min-h-screen flex flex-col pt-16">
           {/* Header */}
-          <header className="container-xl pt-6 sm:pt-8 lg:pt-12">
+          <header className="container-xl pt-8 sm:pt-12 lg:pt-16">
           <div className="text-center animate-fade-in-up">
-            <Badge className="card-glass text-white border-white/30 mb-4 text-sm px-4 py-2">
+            <Badge className="bg-white/95 text-gray-800 border-0 mb-6 text-sm px-6 py-2 shadow-lg backdrop-blur-sm">
               Boutique Travel • Sri Lanka
             </Badge>
-            <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-2 tracking-wide">
+            <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-3 tracking-wide drop-shadow-lg">
               Duvora
             </div>
-            <p className="text-lg sm:text-xl md:text-2xl font-light text-primary-glow italic mb-4">
+            <p className="text-xl sm:text-2xl md:text-3xl font-light text-white/90 italic mb-6">
               Collection
             </p>
-            <div className="w-16 h-0.5 bg-white/60 mx-auto" />
+            <div className="w-20 h-0.5 bg-white/80 mx-auto" />
           </div>
         </header>
 
@@ -81,40 +57,40 @@ const Index = () => {
             <div className="text-center max-w-4xl mx-auto space-y-8 sm:space-y-12">
               
               {/* Main Message */}
-              <section className="space-y-4 sm:space-y-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight">
+              <section className="space-y-6 sm:space-y-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight drop-shadow-lg">
                   Discover stays that match
                   <br className="hidden sm:block" />
-                  <span className="block font-medium bg-gradient-to-r from-primary-glow to-white bg-clip-text text-transparent">
+                  <span className="block font-medium text-white">
                     how you feel
                   </span>
                 </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-lg sm:text-xl lg:text-2xl text-white/90 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
                   Every journey begins with an emotion. Choose your mood, find your place, 
-                  and let Sri Lanka's hidden gems reveal themselves to your soul.
+                  and let Sri Lanka reveal itself to you.
                 </p>
               </section>
 
               {/* Mood Preview */}
               <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }} aria-labelledby="mood-preview">
-                <h2 id="mood-preview" className="text-white/60 text-sm sm:text-base mb-6 uppercase tracking-wide">
+                <h2 id="mood-preview" className="text-white/70 text-base sm:text-lg mb-8 font-light">
                   Start with how you feel
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto" role="list">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 max-w-3xl mx-auto" role="list">
                   {moods.map((mood, index) => (
                     <div
                       key={mood.name}
-                      className="card-base card-glass p-3 sm:p-4 text-center group hover:scale-105 transition-all duration-300"
+                      className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 sm:p-6 text-center group hover:scale-105 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl"
                       style={{ animationDelay: `${0.6 + index * 0.1}s` }}
                       role="listitem"
                     >
                       <div 
-                        className={`w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-2 rounded-full bg-gradient-to-br ${mood.gradient} p-2 group-hover:shadow-glow transition-all duration-300`}
+                        className={`w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 rounded-full bg-gradient-to-br ${mood.gradient} p-2.5 group-hover:shadow-lg transition-all duration-300`}
                         aria-hidden="true"
                       >
                         <mood.icon className="w-full h-full text-white" />
                       </div>
-                      <span className="text-xs sm:text-sm text-white/90 font-medium">
+                      <span className="text-sm sm:text-base text-gray-800 font-medium">
                         {mood.name}
                       </span>
                     </div>
@@ -126,15 +102,13 @@ const Index = () => {
               <section className="animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
                 <Button
                   onClick={handleStartJourney}
-                  variant="hero"
-                  size="lg"
-                  className="px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-xl"
+                  className="bg-white text-gray-900 hover:bg-gray-50 px-10 sm:px-14 py-4 sm:py-5 text-lg sm:text-xl font-medium rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
                   aria-describedby="cta-description"
                 >
                   Begin Your Journey
-                  <Compass className="w-4 h-4 sm:w-5 sm:h-5 ml-2" aria-hidden="true" />
+                  <Compass className="w-5 h-5 sm:w-6 sm:h-6 ml-3" aria-hidden="true" />
                 </Button>
-                <p id="cta-description" className="text-white/50 text-xs sm:text-sm mt-4">
+                <p id="cta-description" className="text-white/60 text-sm sm:text-base mt-6 font-light">
                   No commitments • Instant discovery • Curated for you
                 </p>
               </section>
