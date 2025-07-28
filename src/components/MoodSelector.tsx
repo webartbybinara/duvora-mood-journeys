@@ -84,10 +84,10 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
       <div className="container-xl">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 animate-fade-in-up">
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium text-foreground mb-4 sm:mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-4 sm:mb-6">
             How are you feeling?
           </h1>
-          <p className="font-sans text-lg sm:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4 font-light">
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
             Choose up to 3 moods that resonate with your soul. Let your emotions guide your journey through Sri Lanka's hidden gems.
           </p>
           <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
@@ -133,15 +133,15 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
                     loading="lazy"
                   />
                   
-                  {/* Minimalist Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+                  {/* Enhanced Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-300`} />
                   
-                  {/* Glass Morphism Icon */}
-                  <div className="absolute top-4 sm:top-6 right-4 sm:right-6">
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl card-glass-strong flex items-center justify-center transition-all duration-300 ${
-                      isSelected ? 'animate-ring-pulse scale-110' : 'animate-gentle-bounce'
+                  {/* Floating Icon */}
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full card-glass flex items-center justify-center ${
+                      isSelected ? 'animate-pulse-glow ring-2 ring-white/50' : 'animate-float'
                     }`}>
-                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white drop-shadow-lg" />
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
 
@@ -164,17 +164,17 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
                   )}
                 </div>
 
-                {/* Content with improved typography */}
-                <div className="p-5 sm:p-7">
-                  <h3 className="font-serif text-xl sm:text-2xl font-medium text-foreground mb-3 tracking-tight">
+                {/* Content */}
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-medium text-foreground mb-2">
                     {mood.name}
                   </h3>
-                  <p className="font-sans text-muted-foreground text-base sm:text-lg leading-relaxed font-light">
+                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                     {mood.description}
                   </p>
                   
-                  {/* Interactive hint with better typography */}
-                  <div className="mt-4 sm:mt-5 text-xs sm:text-sm text-muted-foreground/70 font-sans uppercase tracking-wider">
+                  {/* Interactive hint */}
+                  <div className="mt-3 sm:mt-4 text-xs text-muted-foreground/70">
                     {isSelected ? 'Tap to remove' : isDisabled ? 'Maximum reached' : 'Tap to select'}
                   </div>
                 </div>
