@@ -76,89 +76,123 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
   );
 
   return (
-    <div className="min-h-screen bg-gradient-serene py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground">
-              ← Back to Moods
-            </Button>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-            Where shall we take you?
-          </h1>
-          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Based on your mood selection, these regions resonate with your spirit. Choose your destination to discover curated stays.
-          </p>
+    <div className="min-h-screen bg-gradient-serene relative overflow-hidden">
+      {/* Floating Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-xl animate-float" />
+        <div className="absolute top-40 right-20 w-24 h-24 bg-accent/10 rounded-full blur-lg animate-drift" />
+        <div className="absolute bottom-40 left-20 w-40 h-40 bg-secondary/5 rounded-full blur-2xl animate-float" style={{animationDelay: '2s'}} />
+        <div className="absolute bottom-20 right-10 w-20 h-20 bg-primary/8 rounded-full blur-lg animate-drift" style={{animationDelay: '4s'}} />
+      </div>
 
-          {/* Selected Moods Display */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-            {selectedMoods.map((mood) => (
-              <Badge key={mood} variant="secondary" className="capitalize">
-                {mood.replace('-', ' ')}
-              </Badge>
-            ))}
+      <div className="relative z-10 py-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16 animate-fade-in-up">
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground backdrop-blur-sm bg-background/20 border border-border/30">
+                ← Back to Moods
+              </Button>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-light text-foreground mb-6 tracking-tight">
+              Where shall we take you?
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+              Based on your mood selection, these regions resonate with your spirit. Choose your destination to discover curated stays.
+            </p>
+
+            {/* Selected Moods Display */}
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+              {selectedMoods.map((mood) => (
+                <Badge key={mood} variant="secondary" className="capitalize px-4 py-2 text-sm backdrop-blur-sm bg-secondary/40 border border-secondary/30">
+                  {mood.replace('-', ' ')}
+                </Badge>
+              ))}
+            </div>
           </div>
+
+          {/* Recommended Regions */}
+          {matchingRegions.length > 0 && (
+            <div className="mb-20">
+              <h2 className="text-3xl font-light text-foreground mb-12 text-center">
+                Perfect for Your Mood
+              </h2>
+              <div className="relative">
+                <div className="flex flex-col items-center gap-8 max-w-4xl mx-auto">
+                  {matchingRegions.map((region, index) => (
+                    <div
+                      key={region.id}
+                      className="w-full"
+                      style={{
+                        transform: `translateX(${index % 2 === 0 ? '-20px' : '20px'}) rotate(${index % 2 === 0 ? '-1deg' : '1deg'})`,
+                        zIndex: matchingRegions.length - index,
+                        animationDelay: `${index * 200}ms`
+                      }}
+                    >
+                      <RegionCard
+                        region={region}
+                        isSelected={selectedRegion === region.id}
+                        isRecommended={true}
+                        animationDelay={index * 200}
+                        onClick={() => onRegionSelect(region.id)}
+                        cardIndex={index}
+                        isStaggered={true}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Other Regions */}
+          {otherRegions.length > 0 && (
+            <div className="mb-16">
+              <h2 className="text-2xl font-light text-muted-foreground mb-10 text-center">
+                Other Beautiful Destinations
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                {otherRegions.map((region, index) => (
+                  <div
+                    key={region.id}
+                    style={{
+                      transform: `translateY(${(index % 3) * 10}px) rotate(${index % 2 === 0 ? '0.5deg' : '-0.5deg'})`,
+                      animationDelay: `${(matchingRegions.length + index) * 150}ms`
+                    }}
+                  >
+                    <RegionCard
+                      region={region}
+                      isSelected={selectedRegion === region.id}
+                      isRecommended={false}
+                      animationDelay={(matchingRegions.length + index) * 150}
+                      onClick={() => onRegionSelect(region.id)}
+                      cardIndex={index}
+                      isStaggered={false}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Continue Button */}
+          {selectedRegion && (
+            <div className="text-center animate-fade-in-up relative z-20">
+              <div className="inline-block">
+                <Button
+                  onClick={onContinue}
+                  variant="mood"
+                  size="lg"
+                  className="px-16 py-6 text-xl backdrop-blur-sm bg-primary/90 border border-primary/30 hover:bg-primary shadow-glow hover:shadow-strong transition-all duration-300 hover:scale-105"
+                >
+                  Discover Your Stays
+                  <ChevronRight className="w-6 h-6 ml-3" />
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* Recommended Regions */}
-        {matchingRegions.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-2xl font-light text-foreground mb-6 text-center">
-              Perfect for Your Mood
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {matchingRegions.map((region, index) => (
-                <RegionCard
-                  key={region.id}
-                  region={region}
-                  isSelected={selectedRegion === region.id}
-                  isRecommended={true}
-                  animationDelay={index * 100}
-                  onClick={() => onRegionSelect(region.id)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Other Regions */}
-        {otherRegions.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-xl font-light text-muted-foreground mb-6 text-center">
-              Other Beautiful Destinations
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {otherRegions.map((region, index) => (
-                <RegionCard
-                  key={region.id}
-                  region={region}
-                  isSelected={selectedRegion === region.id}
-                  isRecommended={false}
-                  animationDelay={(matchingRegions.length + index) * 100}
-                  onClick={() => onRegionSelect(region.id)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Continue Button */}
-        {selectedRegion && (
-          <div className="text-center animate-fade-in-up">
-            <Button
-              onClick={onContinue}
-              variant="mood"
-              size="lg"
-              className="px-12 py-4 text-lg"
-            >
-              Discover Your Stays
-              <ChevronRight className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -170,19 +204,37 @@ interface RegionCardProps {
   isRecommended: boolean;
   animationDelay: number;
   onClick: () => void;
+  cardIndex: number;
+  isStaggered: boolean;
 }
 
-function RegionCard({ region, isSelected, isRecommended, animationDelay, onClick }: RegionCardProps) {
+function RegionCard({ region, isSelected, isRecommended, animationDelay, onClick, cardIndex, isStaggered }: RegionCardProps) {
+  const getCardStyle = () => {
+    if (isStaggered) {
+      return {
+        animationDelay: `${animationDelay}ms`,
+        // Additional staggered styling is handled by parent container
+      };
+    }
+    return {
+      animationDelay: `${animationDelay}ms`,
+    };
+  };
+
   return (
     <Card
-      className={`cursor-pointer transition-all duration-500 hover:scale-105 group ${
-        isSelected
-          ? 'ring-2 ring-primary shadow-glow'
-          : 'hover:shadow-dreamy'
-      } ${isRecommended ? 'border-primary/30' : ''}`}
-      style={{
-        animationDelay: `${animationDelay}ms`
-      }}
+      className={`cursor-pointer transition-all duration-500 group animate-fade-in-up
+        ${isSelected
+          ? 'ring-2 ring-primary shadow-glow scale-105 bg-gradient-card backdrop-blur-sm'
+          : 'hover:shadow-strong hover:scale-105 hover:-translate-y-2'
+        } 
+        ${isRecommended 
+          ? 'border-primary/40 bg-card/80 backdrop-blur-sm shadow-medium' 
+          : 'bg-card/60 backdrop-blur-sm border-border/30'
+        }
+        ${isStaggered ? 'hover:rotate-0 hover:z-50' : ''}
+      `}
+      style={getCardStyle()}
       onClick={onClick}
     >
       <div className="p-6">
