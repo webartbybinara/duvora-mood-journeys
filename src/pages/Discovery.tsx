@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EnhancedMoodSelector } from '@/components/EnhancedMoodSelector';
+import { MoodSelector } from '@/components/MoodSelector';
 import { RegionSelector } from '@/components/RegionSelector';
 import { HotelListings } from '@/components/HotelListings';
 import { Navigation } from '@/components/Navigation';
@@ -56,7 +56,7 @@ export default function Discovery() {
           <div className="container-xl py-8">
             <Breadcrumbs />
           </div>
-          <EnhancedMoodSelector
+          <MoodSelector
             selectedMoods={selectedMoods}
             onMoodToggle={handleMoodToggle}
             onContinue={handleMoodContinue}
