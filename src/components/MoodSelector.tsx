@@ -112,104 +112,110 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
             return (
               <div
                 key={mood.id}
-                className={`group relative cursor-pointer animate-fade-in-up ${
-                  isDisabled ? 'cursor-not-allowed' : ''
+                className={`group relative cursor-pointer animate-fade-in-up transition-all duration-500 ${
+                  isDisabled ? 'cursor-not-allowed opacity-60' : ''
                 }`}
                 style={{
                   animationDelay: `${index * 100}ms`
                 }}
                 onClick={() => !isDisabled && onMoodToggle(mood.id)}
               >
-                {/* Base Image Layer */}
-                <div className={`relative aspect-[4/3] sm:aspect-[3/2] rounded-2xl overflow-hidden transition-all duration-700 ${
+                {/* Full Background Image Container */}
+                <div className={`relative aspect-[3/4] sm:aspect-[4/3] rounded-3xl overflow-hidden transition-all duration-700 ${
                   isSelected 
-                    ? 'scale-[0.98] shadow-[0_20px_50px_rgba(var(--primary)_/_0.4)]' 
-                    : isDisabled
-                    ? 'opacity-40 scale-100'
-                    : 'shadow-elegant hover:shadow-immersive hover:scale-[1.01]'
+                    ? 'ring-4 ring-primary/50 shadow-[0_0_40px_rgba(var(--primary)_/_0.4)] scale-[1.02]' 
+                    : 'hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)]'
                 }`}>
+                  
+                  {/* Background Image */}
                   <img
                     src={mood.image}
                     alt={mood.name}
                     className={`w-full h-full object-cover transition-all duration-1000 ${
-                      isSelected ? 'scale-105 blur-[1px]' : 'group-hover:scale-110'
+                      isSelected ? 'scale-110 brightness-110' : 'group-hover:scale-105'
                     }`}
                     loading="lazy"
                   />
                   
-                  {/* Dynamic Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-all duration-700 ${
+                  {/* Glass Morphism Overlay */}
+                  <div className={`absolute inset-0 transition-all duration-700 ${
                     isSelected 
-                      ? 'opacity-90' 
-                      : 'opacity-60 group-hover:opacity-40'
+                      ? 'bg-gradient-to-t from-primary/40 via-primary/10 to-transparent backdrop-blur-[2px]'
+                      : 'bg-gradient-to-t from-black/50 via-transparent to-black/20 group-hover:from-black/40'
                   }`} />
                   
-                  {/* Parallax Layer - Mood Icon */}
-                  <div className={`absolute top-4 right-4 z-30 transition-all duration-700 ${
-                    isSelected 
-                      ? 'transform translate-x-1 -translate-y-1 scale-110' 
-                      : 'group-hover:transform group-hover:-translate-x-1 group-hover:-translate-y-1'
+                  {/* Floating Icon - Top Right */}
+                  <div className={`absolute top-6 right-6 transition-all duration-500 ${
+                    isSelected ? 'scale-110 rotate-12' : 'group-hover:scale-105 group-hover:-rotate-6'
                   }`}>
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-500 ${
+                    <div className={`w-16 h-16 rounded-2xl backdrop-blur-xl border border-white/30 flex items-center justify-center transition-all duration-500 ${
                       isSelected 
-                        ? 'bg-primary/80 shadow-[0_0_20px_rgba(var(--primary)_/_0.6)] animate-pulse-glow' 
-                        : 'bg-white/10 group-hover:bg-white/20 group-hover:scale-110'
+                        ? 'bg-primary/20 shadow-[0_8px_32px_rgba(var(--primary)_/_0.3)]' 
+                        : 'bg-white/10 group-hover:bg-white/20'
                     }`}>
-                      <Icon className={`w-6 h-6 sm:w-7 sm:h-7 transition-all duration-300 ${
-                        isSelected ? 'text-primary-foreground' : 'text-white'
+                      <Icon className={`w-8 h-8 transition-all duration-300 ${
+                        isSelected ? 'text-primary' : 'text-white'
                       }`} />
                     </div>
                   </div>
 
-                  {/* Selected Badge - Top Layer */}
+                  {/* Selection Badge */}
                   {isSelected && (
-                    <div className="absolute top-4 left-4 z-30 animate-scale-in">
-                      <div className="backdrop-blur-md bg-primary/90 text-primary-foreground px-3 py-1.5 rounded-xl text-xs font-medium border border-primary/20 shadow-lg">
-                        ✓ Selected #{selectedMoods.indexOf(mood.id) + 1}
+                    <div className="absolute top-6 left-6 animate-scale-in">
+                      <div className="backdrop-blur-xl bg-primary/90 text-primary-foreground px-4 py-2 rounded-2xl text-sm font-medium border border-primary/30 shadow-lg">
+                        Selected #{selectedMoods.indexOf(mood.id) + 1}
                       </div>
                     </div>
                   )}
-                </div>
 
-                {/* Floating Content Card - Elevated Layer */}
-                <div className={`relative -mt-8 mx-4 z-20 transition-all duration-700 ${
-                  isSelected 
-                    ? 'transform translate-y-2 scale-[1.02]' 
-                    : 'group-hover:-translate-y-1'
-                }`}>
-                  <Card className={`backdrop-blur-lg border border-white/20 shadow-immersive transition-all duration-700 ${
-                    isSelected 
-                      ? 'bg-primary/5 border-primary/30 shadow-[0_20px_40px_rgba(var(--primary)_/_0.3)]'
-                      : 'bg-white/80 group-hover:bg-white/90 group-hover:shadow-[0_15px_35px_rgba(0,0,0,0.15)]'
+                  {/* Floating Content Glass Card */}
+                  <div className={`absolute bottom-6 left-6 right-6 transition-all duration-700 ${
+                    isSelected ? 'transform translate-y-1' : 'group-hover:-translate-y-1'
                   }`}>
-                    <div className="p-5 sm:p-6">
-                      <h3 className={`text-lg sm:text-xl font-medium mb-2 transition-colors duration-300 ${
+                    <div className={`backdrop-blur-xl rounded-2xl border border-white/20 p-6 transition-all duration-500 ${
+                      isSelected 
+                        ? 'bg-white/95 border-primary/30 shadow-[0_16px_32px_rgba(var(--primary)_/_0.2)]'
+                        : 'bg-white/80 group-hover:bg-white/90'
+                    }`}>
+                      {/* Mood Name */}
+                      <h3 className={`text-xl sm:text-2xl font-light mb-2 transition-colors duration-300 ${
                         isSelected ? 'text-primary' : 'text-foreground'
                       }`}>
                         {mood.name}
                       </h3>
-                      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-3">
+                      
+                      {/* Description */}
+                      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-4">
                         {mood.description}
                       </p>
                       
-                      {/* Interactive Hint */}
-                      <div className={`text-xs transition-all duration-300 ${
-                        isSelected 
-                          ? 'text-primary/70 font-medium' 
-                          : isDisabled 
-                          ? 'text-muted-foreground/50' 
-                          : 'text-muted-foreground/70 group-hover:text-muted-foreground'
-                      }`}>
-                        {isSelected ? 'Tap to remove from selection' : isDisabled ? 'Maximum moods selected' : 'Tap to add to your journey'}
+                      {/* Status Indicator */}
+                      <div className="flex items-center justify-between">
+                        <div className={`text-xs font-medium transition-all duration-300 ${
+                          isSelected 
+                            ? 'text-primary' 
+                            : isDisabled 
+                            ? 'text-muted-foreground/50' 
+                            : 'text-muted-foreground group-hover:text-foreground'
+                        }`}>
+                          {isSelected ? '✓ Added to journey' : isDisabled ? 'Max selection reached' : 'Tap to select'}
+                        </div>
+                        
+                        {/* Floating Action Indicator */}
+                        {!isDisabled && !isSelected && (
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
+                            <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </Card>
-                </div>
+                  </div>
 
-                {/* Selection Glow Effect */}
-                {isSelected && (
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/20 to-primary/10 animate-pulse-glow pointer-events-none z-10" />
-                )}
+                  {/* Ambient Glow Effect for Selected */}
+                  {isSelected && (
+                    <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-[2rem] blur-xl animate-pulse-glow -z-10" />
+                  )}
+                </div>
               </div>
             );
           })}
