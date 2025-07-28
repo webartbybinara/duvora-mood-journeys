@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { MoodSelector } from '@/components/MoodSelector';
 import { RegionSelector } from '@/components/RegionSelector';
 import { HotelListings } from '@/components/HotelListings';
+import { Navigation } from '@/components/Navigation';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 type DiscoveryStep = 'mood' | 'region' | 'hotels';
 
@@ -48,34 +50,58 @@ export default function Discovery() {
 
   if (currentStep === 'mood') {
     return (
-      <MoodSelector
-        selectedMoods={selectedMoods}
-        onMoodToggle={handleMoodToggle}
-        onContinue={handleMoodContinue}
-      />
+      <>
+        <Navigation />
+        <main className="pt-16">
+          <div className="container-xl py-8">
+            <Breadcrumbs />
+          </div>
+          <MoodSelector
+            selectedMoods={selectedMoods}
+            onMoodToggle={handleMoodToggle}
+            onContinue={handleMoodContinue}
+          />
+        </main>
+      </>
     );
   }
 
   if (currentStep === 'region') {
     return (
-      <RegionSelector
-        selectedMoods={selectedMoods}
-        selectedRegion={selectedRegion}
-        onRegionSelect={handleRegionSelect}
-        onContinue={handleRegionContinue}
-        onBack={handleBackToMoods}
-      />
+      <>
+        <Navigation />
+        <main className="pt-16">
+          <div className="container-xl py-8">
+            <Breadcrumbs />
+          </div>
+          <RegionSelector
+            selectedMoods={selectedMoods}
+            selectedRegion={selectedRegion}
+            onRegionSelect={handleRegionSelect}
+            onContinue={handleRegionContinue}
+            onBack={handleBackToMoods}
+          />
+        </main>
+      </>
     );
   }
 
   if (currentStep === 'hotels' && selectedRegion) {
     return (
-      <HotelListings
-        selectedMoods={selectedMoods}
-        selectedRegion={selectedRegion}
-        onBack={handleBackToRegions}
-        onHotelSelect={handleHotelSelect}
-      />
+      <>
+        <Navigation />
+        <main className="pt-16">
+          <div className="container-xl py-8">
+            <Breadcrumbs />
+          </div>
+          <HotelListings
+            selectedMoods={selectedMoods}
+            selectedRegion={selectedRegion}
+            onBack={handleBackToRegions}
+            onHotelSelect={handleHotelSelect}
+          />
+        </main>
+      </>
     );
   }
 
