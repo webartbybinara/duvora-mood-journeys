@@ -163,106 +163,130 @@ const Destinations = () => {
               </div>
             </section>
 
-            {/* Destinations Grid */}
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {/* Destinations Grid - Layered Depth Design */}
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
               {filteredDestinations.map((destination, index) => (
-                <Card
-                  key={destination.id}
-                  className="overflow-hidden hover:shadow-dreamy transition-all duration-500 animate-fade-in-up"
+                <div 
+                  key={destination.id} 
+                  className="group relative animate-fade-in-up" 
                   style={{ animationDelay: `${0.4 + index * 0.1}s` }}
                 >
-                  {/* Image Section */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <img
-                      src={destination.image}
-                      alt={`${destination.name} - ${destination.description}`}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                      loading="lazy"
-                    />
+                  {/* Main Card Container with Layered Effect */}
+                  <div className="relative bg-gradient-card backdrop-blur-sm rounded-2xl border border-border/30 overflow-hidden shadow-subtle hover:shadow-dreamy transition-all duration-700 group-hover:scale-[1.02]">
                     
-                    {/* Floating Info */}
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-black/50 text-white border-white/30 backdrop-blur-md">
-                        {destination.propertyCount} Properties
-                      </Badge>
-                    </div>
+                    {/* Background Glow Effect */}
+                    <div className="absolute -inset-0.5 bg-gradient-tropical opacity-0 group-hover:opacity-20 rounded-2xl blur-sm transition-opacity duration-700" />
                     
-                    <div className="absolute top-4 right-4">
-                      <Badge variant="secondary" className="bg-white/20 text-white border-white/30 backdrop-blur-md">
-                        {destination.priceRange}
-                      </Badge>
-                    </div>
-
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 lg:p-8">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <h3 className="text-2xl font-light text-foreground mb-2 flex items-center gap-2">
-                          <MapPin className="w-5 h-5 text-primary" />
-                          {destination.name}
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                          {destination.description}
-                        </p>
+                    {/* Hero Image Section */}
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <img
+                        src={destination.image}
+                        alt={`${destination.name} destination`}
+                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                      
+                      {/* Multi-layered Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-60" />
+                      
+                      {/* Floating Property Count Badge */}
+                      <div className="absolute top-4 left-4 transform group-hover:scale-110 transition-transform duration-300">
+                        <div className="bg-background/95 backdrop-blur-md text-foreground px-3 py-1.5 rounded-full text-xs font-medium border border-border/50 shadow-medium">
+                          {destination.propertyCount} Properties
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Mood Tags */}
-                    <div className="mb-6">
-                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
-                        Perfect For
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {destination.moodTags.map((mood) => {
-                          const Icon = mood.icon;
-                          return (
-                            <Badge
-                              key={mood.id}
-                              variant="outline"
-                              className="border-border/50 hover:border-primary/50 transition-colors"
-                            >
-                              <Icon className="w-3 h-3 mr-1" />
-                              {mood.name}
-                            </Badge>
-                          );
-                        })}
+                      
+                      {/* Floating Price Range Badge */}
+                      <div className="absolute top-4 right-4 transform group-hover:scale-110 transition-transform duration-300">
+                        <div className="bg-primary/90 backdrop-blur-md text-primary-foreground px-3 py-1.5 rounded-full text-xs font-medium shadow-glow">
+                          {destination.priceRange}
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Highlights */}
-                    <div className="mb-6">
-                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
-                        Highlights
-                      </p>
-                      <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-                        {destination.highlights.map((highlight) => (
-                          <div key={highlight} className="flex items-center gap-2">
-                            <div className="w-1 h-1 bg-primary rounded-full" />
-                            {highlight}
+                      {/* Bottom Title Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex items-end justify-between">
+                          <div>
+                            <h3 className="text-2xl lg:text-3xl font-light text-white mb-2 flex items-center gap-2">
+                              <MapPin className="w-5 h-5 text-primary-glow" />
+                              {destination.name}
+                            </h3>
+                            <p className="text-white/90 text-sm leading-relaxed max-w-sm">
+                              {destination.description}
+                            </p>
                           </div>
-                        ))}
+                        </div>
                       </div>
                     </div>
 
-                    {/* Best Time & Action */}
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-muted-foreground">
-                        <span className="font-medium">Best Time:</span> {destination.bestTime}
+                    {/* Content Layers */}
+                    <div className="relative bg-card/95 backdrop-blur-sm">
+                      {/* Mood Tags Layer */}
+                      <div className="p-6 pb-4 border-b border-border/30">
+                        <div className="flex items-center justify-between mb-4">
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            Perfect For
+                          </p>
+                          <div className="text-xs text-muted-foreground">
+                            Best: {destination.bestTime}
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {destination.moodTags.map((mood) => {
+                            const Icon = mood.icon;
+                            return (
+                              <div
+                                key={mood.id}
+                                className="group/mood relative bg-gradient-card border border-border/50 hover:border-primary/50 px-3 py-1.5 rounded-full transition-all duration-300 hover:shadow-float"
+                              >
+                                <div className="flex items-center gap-1.5 text-xs font-medium">
+                                  <Icon className="w-3.5 h-3.5 text-primary" />
+                                  <span className="text-foreground">{mood.name}</span>
+                                </div>
+                                {/* Subtle hover glow */}
+                                <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 group-hover/mood:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                      <Button 
-                        onClick={() => handleDiscoverStays(destination.id)}
-                        variant="default"
-                        size="sm"
-                      >
-                        Discover Stays
-                      </Button>
+
+                      {/* Highlights Layer */}
+                      <div className="p-6 pt-4">
+                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
+                          Must-See Highlights
+                        </p>
+                        <div className="grid grid-cols-2 gap-3 mb-6">
+                          {destination.highlights.map((highlight, idx) => (
+                            <div 
+                              key={highlight} 
+                              className="flex items-center gap-2 text-sm text-muted-foreground group/highlight"
+                              style={{ animationDelay: `${idx * 0.1}s` }}
+                            >
+                              <div className="w-1.5 h-1.5 bg-gradient-tropical rounded-full flex-shrink-0 group-hover/highlight:shadow-glow transition-shadow duration-300" />
+                              <span className="group-hover/highlight:text-foreground transition-colors duration-300">{highlight}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Action Button */}
+                        <Button 
+                          onClick={() => handleDiscoverStays(destination.id)}
+                          className="w-full bg-gradient-tropical hover:shadow-glow transition-all duration-300 group-hover:scale-[1.02] font-medium"
+                          size="lg"
+                        >
+                          Discover {destination.name} Stays
+                          <Star className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform duration-300" />
+                        </Button>
+                      </div>
                     </div>
+                    
+                    {/* Floating Decorative Elements */}
+                    <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-sunset opacity-10 rounded-full blur-xl group-hover:opacity-20 transition-opacity duration-700" />
+                    <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-tropical opacity-10 rounded-full blur-lg group-hover:opacity-20 transition-opacity duration-700" />
                   </div>
-                </Card>
+                </div>
               ))}
             </section>
 
