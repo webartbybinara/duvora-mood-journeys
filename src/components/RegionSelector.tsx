@@ -85,27 +85,27 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
         <div className="absolute bottom-20 right-10 w-20 h-20 bg-primary/8 rounded-full blur-lg animate-drift" style={{animationDelay: '4s'}} />
       </div>
 
-      <div className="relative z-10 py-8 px-4">
+      <div className="relative z-10 py-4 sm:py-8 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-16 animate-fade-in-up">
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground backdrop-blur-sm bg-background/20 border border-border/30">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up">
+            <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
+              <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground backdrop-blur-sm bg-background/20 border border-border/30 text-sm sm:text-base">
                 ← Back to Moods
               </Button>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-light text-foreground mb-6 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-4 sm:mb-6 tracking-tight px-4">
               Where shall we take you?
             </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
               Based on your mood selection, these regions resonate with your spirit. Choose your destination to discover curated stays.
             </p>
 
             {/* Selected Moods Display */}
-            <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 px-4">
               {selectedMoods.map((mood) => (
-                <Badge key={mood} variant="secondary" className="capitalize px-4 py-2 text-sm backdrop-blur-sm bg-secondary/40 border border-secondary/30">
+                <Badge key={mood} variant="secondary" className="capitalize px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm backdrop-blur-sm bg-secondary/40 border border-secondary/30">
                   {mood.replace('-', ' ')}
                 </Badge>
               ))}
@@ -114,18 +114,20 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
 
           {/* Recommended Regions */}
           {matchingRegions.length > 0 && (
-            <div className="mb-20">
-              <h2 className="text-3xl font-light text-foreground mb-12 text-center">
+            <div className="mb-12 sm:mb-16 lg:mb-20">
+              <h2 className="text-2xl sm:text-3xl font-light text-foreground mb-8 sm:mb-12 text-center px-4">
                 Perfect for Your Mood
               </h2>
-              <div className="relative">
-                <div className="flex flex-col items-center gap-8 max-w-4xl mx-auto">
+              <div className="relative px-4">
+                <div className="flex flex-col items-center gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto">
                   {matchingRegions.map((region, index) => (
                     <div
                       key={region.id}
-                      className="w-full"
+                      className="w-full max-w-2xl"
                       style={{
-                        transform: `translateX(${index % 2 === 0 ? '-20px' : '20px'}) rotate(${index % 2 === 0 ? '-1deg' : '1deg'})`,
+                        transform: window.innerWidth >= 640 
+                          ? `translateX(${index % 2 === 0 ? '-20px' : '20px'}) rotate(${index % 2 === 0 ? '-1deg' : '1deg'})`
+                          : 'none',
                         zIndex: matchingRegions.length - index,
                         animationDelay: `${index * 200}ms`
                       }}
@@ -148,16 +150,18 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
 
           {/* Other Regions */}
           {otherRegions.length > 0 && (
-            <div className="mb-16">
-              <h2 className="text-2xl font-light text-muted-foreground mb-10 text-center">
+            <div className="mb-12 sm:mb-16 px-4">
+              <h2 className="text-xl sm:text-2xl font-light text-muted-foreground mb-6 sm:mb-10 text-center">
                 Other Beautiful Destinations
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
                 {otherRegions.map((region, index) => (
                   <div
                     key={region.id}
                     style={{
-                      transform: `translateY(${(index % 3) * 10}px) rotate(${index % 2 === 0 ? '0.5deg' : '-0.5deg'})`,
+                      transform: window.innerWidth >= 640 
+                        ? `translateY(${(index % 3) * 10}px) rotate(${index % 2 === 0 ? '0.5deg' : '-0.5deg'})`
+                        : 'none',
                       animationDelay: `${(matchingRegions.length + index) * 150}ms`
                     }}
                   >
@@ -178,16 +182,16 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
 
           {/* Continue Button */}
           {selectedRegion && (
-            <div className="text-center animate-fade-in-up relative z-20">
+            <div className="text-center animate-fade-in-up relative z-20 px-4 pb-4 sm:pb-8">
               <div className="inline-block">
                 <Button
                   onClick={onContinue}
                   variant="mood"
                   size="lg"
-                  className="px-16 py-6 text-xl backdrop-blur-sm bg-primary/90 border border-primary/30 hover:bg-primary shadow-glow hover:shadow-strong transition-all duration-300 hover:scale-105"
+                  className="px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-base sm:text-lg lg:text-xl backdrop-blur-sm bg-primary/90 border border-primary/30 hover:bg-primary shadow-glow hover:shadow-strong transition-all duration-300 hover:scale-105 w-full sm:w-auto max-w-sm sm:max-w-none"
                 >
                   Discover Your Stays
-                  <ChevronRight className="w-6 h-6 ml-3" />
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 sm:ml-3" />
                 </Button>
               </div>
             </div>
