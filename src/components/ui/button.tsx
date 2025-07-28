@@ -21,6 +21,7 @@ const buttonVariants = cva(
         mood: "bg-gradient-tropical text-primary-foreground hover:shadow-glow hover:scale-105 transition-all duration-300",
         dreamy: "bg-gradient-sunset text-primary-foreground backdrop-blur-sm hover:shadow-float hover:scale-102 transition-all duration-500",
         floating: "bg-card/80 backdrop-blur-md border border-border/50 text-foreground hover:bg-card hover:shadow-float transition-all duration-300",
+        hero: "bg-white text-primary hover:bg-white/95 shadow-strong hover:shadow-glow hover:scale-105 transition-all duration-300 border-0",
       },
       size: {
         default: "h-10 px-4 py-2",

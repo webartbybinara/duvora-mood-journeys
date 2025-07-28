@@ -80,25 +80,30 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
   const canAddMore = selectedMoods.length < maxMoods;
 
   return (
-    <div className="min-h-screen bg-gradient-serene py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-serene py-6 sm:py-8 lg:py-12">
+      <div className="container-xl">
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4">
+        <div className="text-center mb-8 sm:mb-12 animate-fade-in-up">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-4 sm:mb-6">
             How are you feeling?
           </h1>
-          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
             Choose up to 3 moods that resonate with your soul. Let your emotions guide your journey through Sri Lanka's hidden gems.
           </p>
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Badge variant="secondary" className="text-sm">
+          <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+            <Badge variant="secondary" className="text-sm px-3 py-1">
               {selectedMoods.length} of {maxMoods} selected
             </Badge>
+            {selectedMoods.length === maxMoods && (
+              <Badge className="bg-primary text-primary-foreground text-sm px-3 py-1">
+                Ready to continue!
+              </Badge>
+            )}
           </div>
         </div>
 
         {/* Mood Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid-responsive mb-8 sm:mb-12">
           {moods.map((mood, index) => {
             const isSelected = selectedMoods.includes(mood.id);
             const isDisabled = !isSelected && !canAddMore;
@@ -107,12 +112,12 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
             return (
               <Card
                 key={mood.id}
-                className={`relative overflow-hidden cursor-pointer transition-all duration-500 hover:scale-105 group ${
+                className={`card-base card-interactive relative overflow-hidden transition-all duration-500 group animate-fade-in-up ${
                   isSelected
-                    ? 'ring-2 ring-primary shadow-glow'
+                    ? 'ring-2 ring-primary shadow-glow scale-[1.02]'
                     : isDisabled
-                    ? 'opacity-50 cursor-not-allowed'
-                    : 'hover:shadow-dreamy'
+                    ? 'opacity-50 cursor-not-allowed hover:scale-100'
+                    : 'hover:shadow-medium'
                 }`}
                 style={{
                   animationDelay: `${index * 100}ms`
@@ -120,43 +125,58 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
                 onClick={() => !isDisabled && onMoodToggle(mood.id)}
               >
                 {/* Background Image */}
-                <div className="aspect-[4/3] relative overflow-hidden">
+                <div className="aspect-[4/3] sm:aspect-[3/2] relative overflow-hidden">
                   <img
                     src={mood.image}
                     alt={mood.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
                   />
                   
-                  {/* Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-t ${mood.gradient} opacity-30 group-hover:opacity-20 transition-opacity duration-300`} />
+                  {/* Enhanced Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-300`} />
                   
                   {/* Floating Icon */}
-                  <div className="absolute top-4 right-4">
-                    <div className={`w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center ${
-                      isSelected ? 'animate-pulse-glow' : 'animate-float'
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full card-glass flex items-center justify-center ${
+                      isSelected ? 'animate-pulse-glow ring-2 ring-white/50' : 'animate-float'
                     }`}>
-                      <Icon className="w-6 h-6 text-white" />
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
 
                   {/* Selected Badge */}
                   {isSelected && (
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-primary text-primary-foreground animate-pulse-glow">
-                        Selected
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
+                      <Badge className="bg-primary text-primary-foreground animate-pulse-glow text-xs">
+                        ✓ Selected
                       </Badge>
+                    </div>
+                  )}
+
+                  {/* Selection Number */}
+                  {isSelected && (
+                    <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium">
+                        {selectedMoods.indexOf(mood.id) + 1}
+                      </div>
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-medium text-foreground mb-2">
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-medium text-foreground mb-2">
                     {mood.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                     {mood.description}
                   </p>
+                  
+                  {/* Interactive hint */}
+                  <div className="mt-3 sm:mt-4 text-xs text-muted-foreground/70">
+                    {isSelected ? 'Tap to remove' : isDisabled ? 'Maximum reached' : 'Tap to select'}
+                  </div>
                 </div>
               </Card>
             );
@@ -165,16 +185,25 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
 
         {/* Continue Button */}
         {selectedMoods.length > 0 && (
-          <div className="text-center animate-fade-in-up">
-            <Button
-              onClick={onContinue}
-              variant="mood"
-              size="lg"
-              className="px-12 py-4 text-lg"
-            >
-              Continue Your Journey
-              <Sparkles className="w-5 h-5 ml-2" />
-            </Button>
+          <div className="text-center animate-fade-in-up sticky bottom-4 sm:bottom-6 z-10">
+            <div className="card-glass p-4 sm:p-6 rounded-2xl max-w-md mx-auto">
+              <p className="text-sm text-muted-foreground mb-4">
+                {selectedMoods.length === 1 
+                  ? 'Great start! Add up to 2 more moods, or continue with your selection.'
+                  : selectedMoods.length === 2
+                  ? 'Perfect! Add one more mood or continue to find your ideal stays.'
+                  : 'Perfect selection! Ready to discover your ideal stays.'}
+              </p>
+              <Button
+                onClick={onContinue}
+                variant="mood"
+                size="lg"
+                className="w-full sm:w-auto px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-medium"
+              >
+                Continue Your Journey
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+              </Button>
+            </div>
           </div>
         )}
       </div>
