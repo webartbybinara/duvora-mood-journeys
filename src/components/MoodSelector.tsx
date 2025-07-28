@@ -110,75 +110,107 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
             const Icon = mood.icon;
 
             return (
-              <Card
+              <div
                 key={mood.id}
-                className={`card-base card-interactive relative overflow-hidden transition-all duration-500 group animate-fade-in-up ${
-                  isSelected
-                    ? 'ring-2 ring-primary shadow-glow scale-[1.02]'
-                    : isDisabled
-                    ? 'opacity-50 cursor-not-allowed hover:scale-100'
-                    : 'hover:shadow-medium'
+                className={`group relative cursor-pointer animate-fade-in-up ${
+                  isDisabled ? 'cursor-not-allowed' : ''
                 }`}
                 style={{
                   animationDelay: `${index * 100}ms`
                 }}
                 onClick={() => !isDisabled && onMoodToggle(mood.id)}
               >
-                {/* Background Image */}
-                <div className="aspect-[4/3] sm:aspect-[3/2] relative overflow-hidden">
+                {/* Base Image Layer */}
+                <div className={`relative aspect-[4/3] sm:aspect-[3/2] rounded-2xl overflow-hidden transition-all duration-700 ${
+                  isSelected 
+                    ? 'scale-[0.98] shadow-[0_20px_50px_rgba(var(--primary)_/_0.4)]' 
+                    : isDisabled
+                    ? 'opacity-40 scale-100'
+                    : 'shadow-elegant hover:shadow-immersive hover:scale-[1.01]'
+                }`}>
                   <img
                     src={mood.image}
                     alt={mood.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className={`w-full h-full object-cover transition-all duration-1000 ${
+                      isSelected ? 'scale-105 blur-[1px]' : 'group-hover:scale-110'
+                    }`}
                     loading="lazy"
                   />
                   
-                  {/* Enhanced Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-300`} />
+                  {/* Dynamic Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-all duration-700 ${
+                    isSelected 
+                      ? 'opacity-90' 
+                      : 'opacity-60 group-hover:opacity-40'
+                  }`} />
                   
-                  {/* Floating Icon */}
-                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full card-glass flex items-center justify-center ${
-                      isSelected ? 'animate-pulse-glow ring-2 ring-white/50' : 'animate-float'
+                  {/* Parallax Layer - Mood Icon */}
+                  <div className={`absolute top-4 right-4 z-30 transition-all duration-700 ${
+                    isSelected 
+                      ? 'transform translate-x-1 -translate-y-1 scale-110' 
+                      : 'group-hover:transform group-hover:-translate-x-1 group-hover:-translate-y-1'
+                  }`}>
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-500 ${
+                      isSelected 
+                        ? 'bg-primary/80 shadow-[0_0_20px_rgba(var(--primary)_/_0.6)] animate-pulse-glow' 
+                        : 'bg-white/10 group-hover:bg-white/20 group-hover:scale-110'
                     }`}>
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      <Icon className={`w-6 h-6 sm:w-7 sm:h-7 transition-all duration-300 ${
+                        isSelected ? 'text-primary-foreground' : 'text-white'
+                      }`} />
                     </div>
                   </div>
 
-                  {/* Selected Badge */}
+                  {/* Selected Badge - Top Layer */}
                   {isSelected && (
-                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                      <Badge className="bg-primary text-primary-foreground animate-pulse-glow text-xs">
-                        ✓ Selected
-                      </Badge>
-                    </div>
-                  )}
-
-                  {/* Selection Number */}
-                  {isSelected && (
-                    <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4">
-                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium">
-                        {selectedMoods.indexOf(mood.id) + 1}
+                    <div className="absolute top-4 left-4 z-30 animate-scale-in">
+                      <div className="backdrop-blur-md bg-primary/90 text-primary-foreground px-3 py-1.5 rounded-xl text-xs font-medium border border-primary/20 shadow-lg">
+                        ✓ Selected #{selectedMoods.indexOf(mood.id) + 1}
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* Content */}
-                <div className="p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-medium text-foreground mb-2">
-                    {mood.name}
-                  </h3>
-                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-                    {mood.description}
-                  </p>
-                  
-                  {/* Interactive hint */}
-                  <div className="mt-3 sm:mt-4 text-xs text-muted-foreground/70">
-                    {isSelected ? 'Tap to remove' : isDisabled ? 'Maximum reached' : 'Tap to select'}
-                  </div>
+                {/* Floating Content Card - Elevated Layer */}
+                <div className={`relative -mt-8 mx-4 z-20 transition-all duration-700 ${
+                  isSelected 
+                    ? 'transform translate-y-2 scale-[1.02]' 
+                    : 'group-hover:-translate-y-1'
+                }`}>
+                  <Card className={`backdrop-blur-lg border border-white/20 shadow-immersive transition-all duration-700 ${
+                    isSelected 
+                      ? 'bg-primary/5 border-primary/30 shadow-[0_20px_40px_rgba(var(--primary)_/_0.3)]'
+                      : 'bg-white/80 group-hover:bg-white/90 group-hover:shadow-[0_15px_35px_rgba(0,0,0,0.15)]'
+                  }`}>
+                    <div className="p-5 sm:p-6">
+                      <h3 className={`text-lg sm:text-xl font-medium mb-2 transition-colors duration-300 ${
+                        isSelected ? 'text-primary' : 'text-foreground'
+                      }`}>
+                        {mood.name}
+                      </h3>
+                      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-3">
+                        {mood.description}
+                      </p>
+                      
+                      {/* Interactive Hint */}
+                      <div className={`text-xs transition-all duration-300 ${
+                        isSelected 
+                          ? 'text-primary/70 font-medium' 
+                          : isDisabled 
+                          ? 'text-muted-foreground/50' 
+                          : 'text-muted-foreground/70 group-hover:text-muted-foreground'
+                      }`}>
+                        {isSelected ? 'Tap to remove from selection' : isDisabled ? 'Maximum moods selected' : 'Tap to add to your journey'}
+                      </div>
+                    </div>
+                  </Card>
                 </div>
-              </Card>
+
+                {/* Selection Glow Effect */}
+                {isSelected && (
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/20 to-primary/10 animate-pulse-glow pointer-events-none z-10" />
+                )}
+              </div>
             );
           })}
         </div>
