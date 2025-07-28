@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, ChevronRight, Heart, Camera, TreePine, Waves, Sparkles, Sunrise } from 'lucide-react';
-import { MoodContext, MoodFloats } from '@/components/MoodFloats';
+import { MapPin, ChevronRight } from 'lucide-react';
 
 interface Region {
   id: string;
@@ -76,60 +75,33 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
     !selectedMoods.includes(region.mood) && selectedMoods.length > 0
   );
 
-  const getMoodPoetry = (selectedMoods: string[]) => {
-    const moodNames = selectedMoods.map(mood => mood.replace('-', ' '));
-    if (moodNames.length === 1) {
-      return `Find your perfect sanctuary for ${moodNames[0]}`;
-    } else if (moodNames.length === 2) {
-      return `Discover where ${moodNames[0]} meets ${moodNames[1]}`;
-    } else {
-      return `Your emotional tapestry awaits the perfect destination`;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-misty relative overflow-hidden">
-      {/* Floating Mood Context */}
-      <MoodContext selectedMoods={selectedMoods} currentStep="region" />
-      
-      {/* Ambient Background */}
-      <div className="absolute inset-0 bg-gradient-dreamy opacity-30" />
-      
-      <div className="relative z-10 py-16 px-4">
-        <div className="max-w-5xl mx-auto">
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-2 mb-8 animate-slide-in-left">
-            <Button 
-              variant="floating" 
-              onClick={onBack} 
-              className="text-muted-foreground hover:text-foreground rounded-full px-6"
-            >
-              ← Return to your emotions
+    <div className="min-h-screen bg-gradient-serene py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12 animate-fade-in-up">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground">
+              ← Back to Moods
             </Button>
           </div>
           
-          {/* Cinematic Header */}
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h1 className="text-5xl md:text-6xl font-extralight text-foreground mb-6 leading-tight">
-              Where shall your
-              <br />
-              <span className="bg-gradient-tropical bg-clip-text text-transparent">
-                heart wander?
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-              {getMoodPoetry(selectedMoods)}
-            </p>
+          <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4">
+            Where shall we take you?
+          </h1>
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Based on your mood selection, these regions resonate with your spirit. Choose your destination to discover curated stays.
+          </p>
 
-            {/* Mood Journey Display */}
-            <div className="flex items-center justify-center mb-12">
-              <MoodFloats 
-                selectedMoods={selectedMoods} 
-                showCount={true}
-                className="animate-slide-in-right"
-              />
-            </div>
+          {/* Selected Moods Display */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+            {selectedMoods.map((mood) => (
+              <Badge key={mood} variant="secondary" className="capitalize">
+                {mood.replace('-', ' ')}
+              </Badge>
+            ))}
           </div>
+        </div>
 
         {/* Recommended Regions */}
         {matchingRegions.length > 0 && (
@@ -173,26 +145,20 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
           </div>
         )}
 
-          {/* Journey Continuation */}
-          {selectedRegion && (
-            <div className="text-center animate-slide-in-right">
-              <div className="mb-6">
-                <p className="text-lg text-muted-foreground font-light italic mb-4">
-                  Your destination calls to you...
-                </p>
-              </div>
-              <Button
-                onClick={onContinue}
-                variant="mood"
-                size="lg"
-                className="px-16 py-6 text-lg font-light rounded-full shadow-mood hover:shadow-glow hover:scale-105 transition-all duration-500"
-              >
-                Discover Your Sanctuary
-                <ChevronRight className="w-5 h-5 ml-3 animate-gentle-bounce" />
-              </Button>
-            </div>
-          )}
-        </div>
+        {/* Continue Button */}
+        {selectedRegion && (
+          <div className="text-center animate-fade-in-up">
+            <Button
+              onClick={onContinue}
+              variant="mood"
+              size="lg"
+              className="px-12 py-4 text-lg"
+            >
+              Discover Your Stays
+              <ChevronRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

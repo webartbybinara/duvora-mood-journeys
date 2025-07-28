@@ -18,9 +18,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        mood: "bg-gradient-tropical text-primary-foreground hover:shadow-glow hover:scale-105 transition-all duration-500 border-0",
-        dreamy: "bg-gradient-sunset text-primary-foreground backdrop-blur-sm hover:shadow-mood hover:scale-102 transition-all duration-500 border-0",
-        floating: "bg-card/80 backdrop-blur-md border border-primary/20 text-foreground hover:bg-card/90 hover:shadow-float hover:border-primary/30 transition-all duration-300",
+        mood: "bg-gradient-tropical text-primary-foreground hover:shadow-glow hover:scale-105 transition-all duration-300",
+        dreamy: "bg-gradient-sunset text-primary-foreground backdrop-blur-sm hover:shadow-float hover:scale-102 transition-all duration-500",
+        floating: "bg-card/80 backdrop-blur-md border border-border/50 text-foreground hover:bg-card hover:shadow-float transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

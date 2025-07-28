@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, MapPin, Wifi, Car, Coffee, Waves, TreePine, Heart, Camera, Sparkles, Sunrise } from 'lucide-react';
-import { MoodContext, MoodFloats } from '@/components/MoodFloats';
+import { Star, MapPin, Wifi, Car, Coffee, Waves, TreePine, Heart, Camera } from 'lucide-react';
 
 import soulfulSolitude from '@/assets/soulful-solitude.jpg';
 import romanticHideouts from '@/assets/romantic-hideouts.jpg';
@@ -88,74 +87,47 @@ export function HotelListings({ selectedMoods, selectedRegion, onBack, onHotelSe
     switch (mood) {
       case 'romantic-hideouts': return Heart;
       case 'instagram-worthy': return Camera;
-      case 'soulful-solitude': return Sparkles;
+      case 'soulful-solitude': return TreePine;
       case 'coastal-serenity': return Waves;
-      case 'jungle-mornings': return TreePine;
-      case 'sunrise-sessions': return Sunrise;
       default: return Star;
     }
   };
 
-  const getJourneyPoetry = (region: string, moods: string[]) => {
-    const moodNames = moods.map(mood => mood.replace('-', ' '));
-    const regionName = region.charAt(0).toUpperCase() + region.slice(1);
-    
-    if (moodNames.length === 1) {
-      return `In ${regionName}, where ${moodNames[0]} finds its perfect expression`;
-    } else if (moodNames.length === 2) {
-      return `${regionName} embraces your ${moodNames[0]} and ${moodNames[1]}`;
-    } else {
-      return `${regionName} awaits, where every emotion finds its sanctuary`;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-misty relative overflow-hidden">
-      {/* Floating Mood Context */}
-      <MoodContext selectedMoods={selectedMoods} currentStep="hotels" />
-      
-      {/* Ambient Background */}
-      <div className="absolute inset-0 bg-gradient-dreamy opacity-20" />
-      
-      <div className="relative z-10 py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-2 mb-8 animate-slide-in-left">
-            <Button 
-              variant="floating" 
-              onClick={onBack} 
-              className="text-muted-foreground hover:text-foreground rounded-full px-6"
-            >
-              ← Explore other destinations
+    <div className="min-h-screen bg-gradient-serene py-8 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12 animate-fade-in-up">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground">
+              ← Back to Regions
             </Button>
           </div>
           
-          {/* Cinematic Header */}
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h1 className="text-5xl md:text-6xl font-extralight text-foreground mb-6 leading-tight">
-              Your perfect
-              <br />
-              <span className="bg-gradient-tropical bg-clip-text text-transparent">
-                sanctuary awaits
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-4xl mx-auto font-light leading-relaxed">
-              {getJourneyPoetry(selectedRegion, selectedMoods)}
-            </p>
+          <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4">
+            Your perfect stays await
+          </h1>
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Curated properties in {selectedRegion} that resonate with your chosen moods. Each stay promises a unique emotional journey.
+          </p>
 
-            {/* Journey Context */}
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-              <Badge variant="outline" className="capitalize px-4 py-2 bg-card/70 backdrop-blur-sm border-primary/20">
-                <MapPin className="w-4 h-4 mr-2" />
-                {selectedRegion}
-              </Badge>
-              <div className="h-4 w-px bg-border/50" />
-              <MoodFloats 
-                selectedMoods={selectedMoods} 
-                className="animate-slide-in-right"
-              />
-            </div>
+          {/* Selected Context */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+            <Badge variant="outline" className="capitalize">
+              <MapPin className="w-3 h-3 mr-1" />
+              {selectedRegion}
+            </Badge>
+            {selectedMoods.map((mood) => {
+              const Icon = getMoodIcon(mood);
+              return (
+                <Badge key={mood} variant="secondary" className="capitalize">
+                  <Icon className="w-3 h-3 mr-1" />
+                  {mood.replace('-', ' ')}
+                </Badge>
+              );
+            })}
           </div>
+        </div>
 
         {/* Perfect Matches */}
         {filteredHotels.length > 0 && (
@@ -209,7 +181,6 @@ export function HotelListings({ selectedMoods, selectedRegion, onBack, onHotelSe
             </Button>
           </div>
         )}
-        </div>
       </div>
     </div>
   );
