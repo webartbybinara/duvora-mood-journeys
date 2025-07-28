@@ -90,7 +90,7 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
           {/* Header */}
           <div className="text-center mb-16 animate-fade-in-up">
             <div className="flex items-center justify-center gap-2 mb-6">
-              <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground bg-background/80 border border-border/30">
+              <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground backdrop-blur-sm bg-background/20 border border-border/30">
                 ← Back to Moods
               </Button>
             </div>
@@ -105,7 +105,7 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
             {/* Selected Moods Display */}
             <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
               {selectedMoods.map((mood) => (
-                <Badge key={mood} variant="secondary" className="capitalize px-4 py-2 text-sm bg-secondary/60 border border-secondary/30">
+                <Badge key={mood} variant="secondary" className="capitalize px-4 py-2 text-sm backdrop-blur-sm bg-secondary/40 border border-secondary/30">
                   {mood.replace('-', ' ')}
                 </Badge>
               ))}
@@ -119,13 +119,14 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
                 Perfect for Your Mood
               </h2>
               <div className="relative">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="flex flex-col items-center gap-8 max-w-4xl mx-auto">
                   {matchingRegions.map((region, index) => (
                     <div
                       key={region.id}
                       className="w-full"
                       style={{
-                        transform: `translateY(${index * 15}px) rotate(${index % 2 === 0 ? '-0.5deg' : '0.5deg'})`,
+                        transform: `translateX(${index % 2 === 0 ? '-20px' : '20px'}) rotate(${index % 2 === 0 ? '-1deg' : '1deg'})`,
+                        zIndex: matchingRegions.length - index,
                         animationDelay: `${index * 200}ms`
                       }}
                     >
@@ -183,7 +184,7 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
                   onClick={onContinue}
                   variant="mood"
                   size="lg"
-                  className="px-16 py-6 text-xl bg-primary border border-primary/30 hover:bg-primary/90 shadow-glow hover:shadow-strong transition-all duration-300 hover:scale-105"
+                  className="px-16 py-6 text-xl backdrop-blur-sm bg-primary/90 border border-primary/30 hover:bg-primary shadow-glow hover:shadow-strong transition-all duration-300 hover:scale-105"
                 >
                   Discover Your Stays
                   <ChevronRight className="w-6 h-6 ml-3" />
@@ -224,12 +225,12 @@ function RegionCard({ region, isSelected, isRecommended, animationDelay, onClick
     <Card
       className={`cursor-pointer transition-all duration-500 group animate-fade-in-up
         ${isSelected
-          ? 'ring-2 ring-primary shadow-glow scale-105 bg-gradient-card'
+          ? 'ring-2 ring-primary shadow-glow scale-105 bg-gradient-card backdrop-blur-sm'
           : 'hover:shadow-strong hover:scale-105 hover:-translate-y-2'
         } 
         ${isRecommended 
-          ? 'border-primary/40 bg-card shadow-medium' 
-          : 'bg-card/90 border-border/30'
+          ? 'border-primary/40 bg-card/80 backdrop-blur-sm shadow-medium' 
+          : 'bg-card/60 backdrop-blur-sm border-border/30'
         }
         ${isStaggered ? 'hover:rotate-0 hover:z-50' : ''}
       `}
