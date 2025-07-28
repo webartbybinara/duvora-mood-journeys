@@ -80,7 +80,11 @@ export default {
 				'glow': 'var(--shadow-glow)',
 				'subtle': 'var(--shadow-subtle)',
 				'medium': 'var(--shadow-medium)',
-				'strong': 'var(--shadow-strong)'
+				'strong': 'var(--shadow-strong)',
+				'elegant': 'var(--shadow-elegant)',
+				'immersive': 'var(--shadow-immersive)',
+				'glass': 'var(--shadow-glass)',
+				'deep': 'var(--shadow-deep)'
 			},
 			spacing: {
 				'xs': 'var(--space-xs)',
@@ -146,6 +150,26 @@ export default {
 				'scale-in': {
 					'0%': { opacity: '0', transform: 'scale(0.95)' },
 					'100%': { opacity: '1', transform: 'scale(1)' }
+				},
+				'particleFloat': {
+					'0%': { 
+						transform: 'translateY(100vh) translateX(-10px) rotate(0deg)',
+						opacity: '0'
+					},
+					'10%': { opacity: '0.3' },
+					'90%': { opacity: '0.3' },
+					'100%': { 
+						transform: 'translateY(-10vh) translateX(10px) rotate(360deg)',
+						opacity: '0'
+					}
+				},
+				'shimmer': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(100%)' }
+				},
+				'bounce-gentle': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-5px)' }
 				}
 			},
 			animation: {
@@ -155,7 +179,10 @@ export default {
 				'drift': 'drift 8s ease-in-out infinite',
 				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
 				'fade-in-up': 'fade-in-up 0.6s ease-out',
-				'scale-in': 'scale-in 0.3s ease-out'
+				'scale-in': 'scale-in 0.3s ease-out',
+				'particle-float': 'particleFloat 15s infinite linear',
+				'shimmer': 'shimmer 2s infinite',
+				'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite'
 			}
 		}
 	},

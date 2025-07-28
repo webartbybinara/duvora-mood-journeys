@@ -59,6 +59,10 @@ All colors MUST be HSL.
     --shadow-subtle: 0 2px 12px -2px hsl(var(--foreground) / 0.08);
     --shadow-medium: 0 8px 32px -8px hsl(var(--foreground) / 0.12);
     --shadow-strong: 0 16px 48px -16px hsl(var(--foreground) / 0.16);
+    --shadow-elegant: 0 8px 30px -5px hsl(var(--primary) / 0.25);
+    --shadow-immersive: 0 20px 60px -10px hsl(var(--primary) / 0.4);
+    --shadow-glass: 0 8px 40px -12px hsl(var(--foreground) / 0.15);
+    --shadow-deep: 0 25px 70px -15px hsl(var(--foreground) / 0.2);
 
     /* Responsive spacing system */
     --space-xs: 0.25rem;
@@ -268,5 +272,84 @@ All colors MUST be HSL.
 
   .animate-pulse-glow {
     animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Enhanced glassmorphism effects */
+  .glass-card {
+    @apply backdrop-blur-xl bg-card/20 border border-white/10 shadow-glass;
+  }
+
+  .glass-island {
+    @apply backdrop-blur-lg bg-gradient-to-br from-white/20 to-white/5 border border-white/20 shadow-immersive;
+  }
+
+  .floating-badge {
+    @apply backdrop-blur-md bg-primary/90 border border-primary/30 shadow-glow;
+  }
+
+  /* Masonry grid layout */
+  .masonry-grid {
+    column-count: 1;
+    column-gap: 1.5rem;
+    @apply space-y-6;
+  }
+
+  @media (min-width: 640px) {
+    .masonry-grid {
+      column-count: 2;
+      column-gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .masonry-grid {
+      column-count: 3;
+      column-gap: 2.5rem;
+    }
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    @apply mb-6;
+  }
+
+  /* Particle effects */
+  .particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    background: radial-gradient(circle, hsl(var(--primary-glow) / 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: particleFloat 15s infinite linear;
+  }
+
+  /* Progress indicator */
+  .progress-dots {
+    @apply flex items-center justify-center space-x-2;
+  }
+
+  .progress-dot {
+    @apply w-2 h-2 rounded-full transition-all duration-300;
+  }
+
+  .progress-dot.active {
+    @apply bg-primary shadow-glow scale-125;
+  }
+
+  .progress-dot.completed {
+    @apply bg-primary-glow shadow-float;
+  }
+
+  .progress-dot.inactive {
+    @apply bg-muted-foreground/30;
   }
 }
