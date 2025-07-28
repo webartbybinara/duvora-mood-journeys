@@ -80,22 +80,38 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
   const canAddMore = selectedMoods.length < maxMoods;
 
   return (
-    <div className="min-h-screen bg-gradient-serene py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-            How are you feeling?
-          </h1>
-          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Choose up to 3 moods that resonate with your soul. Let your emotions guide your journey through Sri Lanka's hidden gems.
-          </p>
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <Badge variant="secondary" className="text-sm">
-              {selectedMoods.length} of {maxMoods} selected
-            </Badge>
+    <div className="min-h-screen bg-gradient-misty relative overflow-hidden">
+      {/* Ambient Background */}
+      <div className="absolute inset-0 bg-gradient-dreamy opacity-50" />
+      
+      <div className="relative z-10 py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Cinematic Header */}
+          <div className="text-center mb-16 animate-fade-in-up">
+            <div className="mb-8">
+              <h1 className="text-5xl md:text-7xl font-extralight text-foreground mb-6 leading-tight">
+                How does your
+                <br />
+                <span className="bg-gradient-tropical bg-clip-text text-transparent animate-breathe">
+                  soul feel today?
+                </span>
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto font-light leading-relaxed">
+                In the misty mountains and golden coastlines of Sri Lanka, 
+                every emotion finds its perfect sanctuary. Choose the moods 
+                that call to your spirit, and let us craft a journey that 
+                resonates with your inner landscape.
+              </p>
+            </div>
+            
+            <div className="flex items-center justify-center gap-4 mb-12">
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-primary/50" />
+              <Badge variant="secondary" className="px-4 py-2 text-sm font-light bg-card/70 backdrop-blur-sm border-primary/20">
+                {selectedMoods.length} of {maxMoods} emotions selected
+              </Badge>
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-primary/50" />
+            </div>
           </div>
-        </div>
 
         {/* Mood Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -163,20 +179,26 @@ export function MoodSelector({ selectedMoods, onMoodToggle, onContinue }: MoodSe
           })}
         </div>
 
-        {/* Continue Button */}
-        {selectedMoods.length > 0 && (
-          <div className="text-center animate-fade-in-up">
-            <Button
-              onClick={onContinue}
-              variant="mood"
-              size="lg"
-              className="px-12 py-4 text-lg"
-            >
-              Continue Your Journey
-              <Sparkles className="w-5 h-5 ml-2" />
-            </Button>
-          </div>
-        )}
+          {/* Journey Continuation */}
+          {selectedMoods.length > 0 && (
+            <div className="text-center animate-slide-in-right">
+              <div className="mb-6">
+                <p className="text-lg text-muted-foreground font-light italic mb-4">
+                  Your emotional compass is set...
+                </p>
+              </div>
+              <Button
+                onClick={onContinue}
+                variant="mood"
+                size="lg"
+                className="px-16 py-6 text-lg font-light rounded-full shadow-mood hover:shadow-glow hover:scale-105 transition-all duration-500"
+              >
+                Begin Your Journey
+                <Sparkles className="w-5 h-5 ml-3 animate-gentle-bounce" />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MoodSelector } from '@/components/MoodSelector';
 import { RegionSelector } from '@/components/RegionSelector';
 import { HotelListings } from '@/components/HotelListings';
@@ -9,6 +9,7 @@ export default function Discovery() {
   const [currentStep, setCurrentStep] = useState<DiscoveryStep>('mood');
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleMoodToggle = (moodId: string) => {
     setSelectedMoods(prev => 
@@ -21,7 +22,11 @@ export default function Discovery() {
   };
 
   const handleMoodContinue = () => {
-    setCurrentStep('region');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentStep('region');
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const handleRegionSelect = (regionId: string) => {
@@ -29,7 +34,11 @@ export default function Discovery() {
   };
 
   const handleRegionContinue = () => {
-    setCurrentStep('hotels');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentStep('hotels');
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const handleHotelSelect = (hotelId: string) => {
@@ -38,46 +47,62 @@ export default function Discovery() {
   };
 
   const handleBackToMoods = () => {
-    setCurrentStep('mood');
-    setSelectedRegion(null);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentStep('mood');
+      setSelectedRegion(null);
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const handleBackToRegions = () => {
-    setCurrentStep('region');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentStep('region');
+      setIsTransitioning(false);
+    }, 300);
   };
 
-  if (currentStep === 'mood') {
-    return (
-      <MoodSelector
-        selectedMoods={selectedMoods}
-        onMoodToggle={handleMoodToggle}
-        onContinue={handleMoodContinue}
-      />
-    );
-  }
+  const renderCurrentStep = () => {
+    if (currentStep === 'mood') {
+      return (
+        <MoodSelector
+          selectedMoods={selectedMoods}
+          onMoodToggle={handleMoodToggle}
+          onContinue={handleMoodContinue}
+        />
+      );
+    }
 
-  if (currentStep === 'region') {
-    return (
-      <RegionSelector
-        selectedMoods={selectedMoods}
-        selectedRegion={selectedRegion}
-        onRegionSelect={handleRegionSelect}
-        onContinue={handleRegionContinue}
-        onBack={handleBackToMoods}
-      />
-    );
-  }
+    if (currentStep === 'region') {
+      return (
+        <RegionSelector
+          selectedMoods={selectedMoods}
+          selectedRegion={selectedRegion}
+          onRegionSelect={handleRegionSelect}
+          onContinue={handleRegionContinue}
+          onBack={handleBackToMoods}
+        />
+      );
+    }
 
-  if (currentStep === 'hotels' && selectedRegion) {
-    return (
-      <HotelListings
-        selectedMoods={selectedMoods}
-        selectedRegion={selectedRegion}
-        onBack={handleBackToRegions}
-        onHotelSelect={handleHotelSelect}
-      />
-    );
-  }
+    if (currentStep === 'hotels' && selectedRegion) {
+      return (
+        <HotelListings
+          selectedMoods={selectedMoods}
+          selectedRegion={selectedRegion}
+          onBack={handleBackToRegions}
+          onHotelSelect={handleHotelSelect}
+        />
+      );
+    }
 
-  return null;
+    return null;
+  };
+
+  return (
+    <div className={`transition-all duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      {renderCurrentStep()}
+    </div>
+  );
 }
