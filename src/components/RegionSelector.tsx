@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, ChevronRight } from 'lucide-react';
+import { MapPin, ChevronRight, Stamp, Star, Heart } from 'lucide-react';
 
 interface Region {
   id: string;
@@ -57,6 +57,16 @@ const regions: Region[] = [
   }
 ];
 
+// Postcard stamp designs for each region
+const regionStamps = {
+  galle: { icon: Heart, color: 'text-red-500', stamp: 'HISTORIC' },
+  kandy: { icon: Star, color: 'text-purple-500', stamp: 'CULTURAL' },
+  ella: { icon: MapPin, color: 'text-green-500', stamp: 'SCENIC' },
+  yala: { icon: Star, color: 'text-orange-500', stamp: 'WILDLIFE' },
+  mirissa: { icon: Heart, color: 'text-blue-500', stamp: 'COASTAL' },
+  sigiriya: { icon: MapPin, color: 'text-yellow-600', stamp: 'ANCIENT' }
+};
+
 interface RegionSelectorProps {
   selectedMoods: string[];
   selectedRegion: string | null;
@@ -76,38 +86,65 @@ export function RegionSelector({ selectedMoods, selectedRegion, onRegionSelect, 
   );
 
   return (
-    <div className="min-h-screen bg-gradient-serene relative overflow-hidden">
-      {/* Floating Background Elements */}
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 relative overflow-hidden">
+      {/* Vintage Paper Texture Background */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.03'%3E%3Cpolygon fill='%23000' points='50 0 60 40 100 50 60 60 50 100 40 60 0 50 40 40'/%3E%3C/g%3E%3C/svg%3E")`
+      }} />
+      
+      {/* Floating Travel Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/5 rounded-full blur-xl animate-float" />
-        <div className="absolute top-40 right-20 w-24 h-24 bg-accent/10 rounded-full blur-lg animate-drift" />
-        <div className="absolute bottom-40 left-20 w-40 h-40 bg-secondary/5 rounded-full blur-2xl animate-float" style={{animationDelay: '2s'}} />
-        <div className="absolute bottom-20 right-10 w-20 h-20 bg-primary/8 rounded-full blur-lg animate-drift" style={{animationDelay: '4s'}} />
+        <div className="absolute top-20 left-10 w-16 h-16 opacity-20 rotate-12 animate-float">
+          <div className="w-full h-full border-4 border-red-500 rounded-full border-dashed" />
+        </div>
+        <div className="absolute top-40 right-20 w-12 h-12 opacity-15 -rotate-6 animate-drift">
+          <div className="w-full h-full bg-blue-500 transform rotate-45" />
+        </div>
+        <div className="absolute bottom-40 left-20 text-6xl opacity-10 rotate-45 animate-float font-dancing text-primary" style={{animationDelay: '2s'}}>
+          ✈
+        </div>
+        <div className="absolute bottom-20 right-10 w-8 h-8 opacity-20 -rotate-12 animate-drift" style={{animationDelay: '4s'}}>
+          <Star className="w-full h-full text-yellow-600" />
+        </div>
       </div>
 
-      <div className="relative z-10 py-4 sm:py-8 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
+      <div className="relative z-10 py-6 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up">
-            <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
-              <Button variant="ghost" onClick={onBack} className="text-muted-foreground hover:text-foreground backdrop-blur-sm bg-background/20 border border-border/30 text-sm sm:text-base">
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20 animate-fade-in-up">
+            <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+              <Button 
+                variant="ghost" 
+                onClick={onBack} 
+                className="text-muted-foreground hover:text-foreground bg-white/80 border border-amber-200 text-sm sm:text-base rounded-full px-6 py-2 shadow-sm hover:shadow-md transition-all"
+              >
                 ← Back to Moods
               </Button>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-foreground mb-4 sm:mb-6 tracking-tight px-4">
-              Where shall we take you?
+            <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-amber-900 mb-6 sm:mb-8 tracking-tight px-4">
+              Your Travel Journal
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
-              Based on your mood selection, these regions resonate with your spirit. Choose your destination to discover curated stays.
+            <p className="font-dancing text-xl sm:text-2xl lg:text-3xl text-amber-700 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
+              Collect postcards from your dream destinations...
             </p>
 
-            {/* Selected Moods Display */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 px-4">
-              {selectedMoods.map((mood) => (
-                <Badge key={mood} variant="secondary" className="capitalize px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm backdrop-blur-sm bg-secondary/40 border border-secondary/30">
-                  {mood.replace('-', ' ')}
-                </Badge>
+            {/* Selected Moods Display - Styled as Travel Stamps */}
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 px-4">
+              {selectedMoods.map((mood, index) => (
+                <div 
+                  key={mood} 
+                  className="relative"
+                  style={{ transform: `rotate(${(index % 3 - 1) * 3}deg)` }}
+                >
+                  <Badge 
+                    variant="secondary" 
+                    className="capitalize px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm bg-white border-2 border-dashed border-red-500 text-red-700 font-medium shadow-md"
+                  >
+                    {mood.replace('-', ' ')}
+                  </Badge>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full opacity-80" />
+                </div>
               ))}
             </div>
           </div>
@@ -213,79 +250,113 @@ interface RegionCardProps {
 }
 
 function RegionCard({ region, isSelected, isRecommended, animationDelay, onClick, cardIndex, isStaggered }: RegionCardProps) {
+  const stamp = regionStamps[region.id as keyof typeof regionStamps];
+  const StampIcon = stamp.icon;
+  
   const getCardStyle = () => {
-    if (isStaggered) {
-      return {
-        animationDelay: `${animationDelay}ms`,
-        // Additional staggered styling is handled by parent container
-      };
-    }
+    const rotation = isStaggered ? 0 : (cardIndex % 2 === 0 ? -1.5 : 1.5);
     return {
       animationDelay: `${animationDelay}ms`,
+      transform: `rotate(${rotation}deg)`,
     };
   };
 
   return (
-    <Card
-      className={`cursor-pointer transition-all duration-500 group animate-fade-in-up
-        ${isSelected
-          ? 'ring-2 ring-primary shadow-glow scale-105 bg-gradient-card backdrop-blur-sm'
-          : 'hover:shadow-strong hover:scale-105 hover:-translate-y-2'
-        } 
-        ${isRecommended 
-          ? 'border-primary/40 bg-card/80 backdrop-blur-sm shadow-medium' 
-          : 'bg-card/60 backdrop-blur-sm border-border/30'
-        }
-        ${isStaggered ? 'hover:rotate-0 hover:z-50' : ''}
+    <div
+      className={`relative cursor-pointer transition-all duration-500 group animate-fade-in-up hover:rotate-0 hover:scale-105 hover:z-50
+        ${isSelected ? 'scale-110 rotate-0 z-40' : ''}
       `}
       style={getCardStyle()}
       onClick={onClick}
     >
-      <div className="p-6">
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin className="w-5 h-5 text-primary" />
-              <h3 className="text-xl font-medium text-foreground">
-                {region.name}
-              </h3>
-              {isRecommended && (
-                <Badge variant="default" className="text-xs">
-                  Recommended
-                </Badge>
-              )}
-            </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {region.description}
-            </p>
+      {/* Postcard Base */}
+      <Card className={`relative bg-gradient-to-br from-amber-50 to-orange-100 border-2 
+        ${isSelected 
+          ? 'border-amber-400 shadow-2xl' 
+          : 'border-amber-200 shadow-lg hover:shadow-xl'
+        }
+        ${isRecommended ? 'border-red-300' : ''}
+        rounded-lg overflow-hidden transition-all duration-300`}
+      >
+        {/* Postcard Top Section - Image Area */}
+        <div className="relative h-32 sm:h-40 bg-gradient-to-r from-amber-100 to-orange-200 border-b-2 border-dashed border-amber-300">
+          {/* Travel Stamp */}
+          <div className={`absolute top-2 right-2 w-16 h-16 bg-white border-2 border-dashed ${stamp.color.replace('text-', 'border-')} rounded-lg flex flex-col items-center justify-center transform rotate-12 shadow-sm`}>
+            <StampIcon className={`w-6 h-6 ${stamp.color}`} />
+            <span className={`text-xs font-bold ${stamp.color} mt-1`}>
+              {stamp.stamp}
+            </span>
           </div>
           
-          {isSelected && (
-            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center animate-pulse-glow">
-              <div className="w-2 h-2 bg-primary-foreground rounded-full" />
+          {/* Postmark */}
+          <div className="absolute top-3 left-3 w-12 h-12 border-2 border-red-400 rounded-full flex items-center justify-center opacity-60">
+            <div className="text-xs font-bold text-red-600 text-center leading-tight">
+              SRI<br/>LANKA
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Highlights */}
-        <div className="space-y-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-            Highlights
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {region.highlights.map((highlight) => (
-              <Badge
-                key={highlight}
-                variant="outline"
-                className="text-xs border-border/50 hover:border-primary/50 transition-colors"
-              >
-                {highlight}
-              </Badge>
-            ))}
+          {/* Region Name - Vintage Style */}
+          <div className="absolute bottom-2 left-3 right-3">
+            <h3 className="font-playfair text-lg sm:text-xl font-bold text-amber-900 leading-tight">
+              {region.name}
+            </h3>
           </div>
         </div>
-      </div>
-    </Card>
+
+        {/* Postcard Message Area */}
+        <div className="p-4 sm:p-6 bg-white/90">
+          {/* Dear... greeting */}
+          <div className="mb-3">
+            <p className="font-dancing text-sm text-amber-700">
+              Dear Traveler,
+            </p>
+          </div>
+
+          {/* Main description */}
+          <p className="text-sm text-amber-800 leading-relaxed mb-4 font-medium">
+            {region.description}
+          </p>
+
+          {/* Highlights as handwritten notes */}
+          <div className="space-y-2">
+            <p className="font-dancing text-xs text-amber-600 font-medium">
+              Must see & do:
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {region.highlights.map((highlight, idx) => (
+                <span
+                  key={highlight}
+                  className="text-xs bg-yellow-100 text-amber-800 px-2 py-1 rounded-full border border-yellow-300 font-medium"
+                  style={{ transform: `rotate(${(idx % 3 - 1) * 2}deg)` }}
+                >
+                  {highlight}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Signature */}
+          <div className="mt-4 pt-3 border-t border-dashed border-amber-200">
+            <p className="font-dancing text-sm text-amber-700 text-right">
+              Wish you were here! ✈
+            </p>
+          </div>
+        </div>
+
+        {/* Selected Indicator */}
+        {isSelected && (
+          <div className="absolute top-3 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+            SELECTED
+          </div>
+        )}
+
+        {/* Recommended Badge */}
+        {isRecommended && (
+          <div className="absolute -top-2 -left-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold transform -rotate-12 shadow-md">
+            ⭐ TOP PICK
+          </div>
+        )}
+      </Card>
+    </div>
   );
 }

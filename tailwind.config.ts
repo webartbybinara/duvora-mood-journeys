@@ -92,6 +92,10 @@ export default {
 				'3xl': 'var(--space-3xl)',
 				'4xl': 'var(--space-4xl)'
 			},
+			fontFamily: {
+				'playfair': ['Playfair Display', 'serif'],
+				'dancing': ['Dancing Script', 'cursive'],
+			},
 			fontSize: {
 				'xs': 'var(--font-size-xs)',
 				'sm': 'var(--font-size-sm)',
