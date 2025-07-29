@@ -191,11 +191,11 @@ export default function HotelDetail() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         {/* Image Gallery */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
-          <div className="lg:col-span-2">
-            <div className="relative aspect-[16/10] rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+          <div className="lg:col-span-3">
+            <div className="relative aspect-[16/10] lg:aspect-[16/9] rounded-xl overflow-hidden">
               <img
                 src={images[selectedImage]}
                 alt={hotel.name}
@@ -203,7 +203,7 @@ export default function HotelDetail() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-3 lg:grid-cols-1 gap-2">
+          <div className="grid grid-cols-5 lg:grid-cols-1 gap-2 lg:gap-3">
             {images.slice(0, 5).map((image, index) => (
               <button
                 key={index}
@@ -218,15 +218,15 @@ export default function HotelDetail() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="xl:col-span-2 space-y-6">
             {/* Hotel Header */}
             <div>
-              <h1 className="text-4xl font-light text-foreground mb-2">{hotel.name}</h1>
-              <p className="text-primary font-medium text-lg italic mb-4">{hotel.tagline}</p>
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-light text-foreground mb-3">{hotel.name}</h1>
+              <p className="text-primary font-medium text-lg lg:text-xl italic mb-4 lg:mb-6">{hotel.tagline}</p>
               
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2 mb-4 lg:mb-6">
                 <Badge variant="outline" className="capitalize">
                   <MapPin className="w-3 h-3 mr-1" />
                   {hotel.region}
@@ -243,7 +243,7 @@ export default function HotelDetail() {
                 })}
               </div>
               
-              <p className="text-muted-foreground leading-relaxed">{hotel.description}</p>
+              <p className="text-muted-foreground leading-relaxed text-base lg:text-lg">{hotel.description}</p>
             </div>
 
             <Separator />
@@ -258,20 +258,20 @@ export default function HotelDetail() {
               
               <TabsContent value="overview" className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">About This Stay</h3>
-                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                  <h3 className="text-xl lg:text-2xl font-semibold mb-4">About This Stay</h3>
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-line text-base lg:text-lg">
                     {hotel.fullDescription}
                   </p>
                 </div>
                 
                 {hotel.highlights && (
                   <div>
-                    <h3 className="text-xl font-semibold mb-4">Highlights</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <h3 className="text-xl lg:text-2xl font-semibold mb-4">Highlights</h3>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                       {hotel.highlights.map((highlight, index) => (
                         <div key={index} className="flex items-start gap-3">
                           <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                          <span className="text-muted-foreground">{highlight}</span>
+                          <span className="text-muted-foreground text-base">{highlight}</span>
                         </div>
                       ))}
                     </div>
@@ -281,12 +281,12 @@ export default function HotelDetail() {
               
               <TabsContent value="amenities" className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">All Amenities</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <h3 className="text-xl lg:text-2xl font-semibold mb-4">All Amenities</h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {hotel.amenities.map((amenity, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
+                      <div key={index} className="flex items-center gap-3 p-3 lg:p-4 bg-muted/30 rounded-lg">
                         <div className="w-2 h-2 bg-primary rounded-full" />
-                        <span>{amenity}</span>
+                        <span className="text-base">{amenity}</span>
                       </div>
                     ))}
                   </div>
@@ -295,13 +295,13 @@ export default function HotelDetail() {
               
               <TabsContent value="location" className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-semibold mb-4">Location Details</h3>
+                  <h3 className="text-xl lg:text-2xl font-semibold mb-4">Location Details</h3>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <MapPin className="w-5 h-5 text-primary" />
-                      <span>{hotel.location || `Located in ${hotel.region}, Sri Lanka`}</span>
+                      <span className="text-base">{hotel.location || `Located in ${hotel.region}, Sri Lanka`}</span>
                     </div>
-                    <div className="bg-muted/30 rounded-lg p-6 text-center">
+                    <div className="bg-muted/30 rounded-lg p-6 lg:p-8 text-center">
                       <ExternalLink className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
                       <p className="text-muted-foreground">Interactive map coming soon</p>
                     </div>
@@ -312,21 +312,21 @@ export default function HotelDetail() {
           </div>
 
           {/* Booking Sidebar */}
-          <div className="lg:col-span-1">
-            <Card className="sticky top-24">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>Book Your Stay</span>
+          <div className="xl:col-span-1">
+            <Card className="sticky top-24 lg:top-28">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
+                  <span className="text-lg lg:text-xl">Book Your Stay</span>
                   {hotel.pricePerNight && (
-                    <span className="text-2xl font-light">
+                    <span className="text-2xl lg:text-3xl font-light">
                       ${hotel.pricePerNight}
                       <span className="text-sm text-muted-foreground">/night</span>
                     </span>
                   )}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-2 text-sm">
+              <CardContent className="space-y-4 lg:space-y-6">
+                <div className="grid grid-cols-2 gap-3 lg:gap-4 text-sm">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-muted-foreground" />
                     <div>
@@ -345,12 +345,12 @@ export default function HotelDetail() {
                 
                 <Separator />
                 
-                <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center gap-2 text-sm lg:text-base">
                   <Users className="w-4 h-4 text-muted-foreground" />
                   <span>Max {hotel.maxGuests || 2} guests</span>
                 </div>
                 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Button className="w-full" size="lg">
                     <Calendar className="w-4 h-4 mr-2" />
                     Check Availability
