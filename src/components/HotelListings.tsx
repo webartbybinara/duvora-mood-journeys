@@ -7,6 +7,8 @@ import { Star, MapPin, Wifi, Car, Coffee, Waves, TreePine, Heart, Camera } from 
 import soulfulSolitude from '@/assets/soulful-solitude.jpg';
 import romanticHideouts from '@/assets/romantic-hideouts.jpg';
 import instagramWorthy from '@/assets/instagram-worthy.jpg';
+import jungleMornings from '@/assets/jungle-mornings.jpg';
+import heroDuvora from '@/assets/hero-duvora.jpg';
 
 interface Hotel {
   id: string;
@@ -23,6 +25,7 @@ interface Hotel {
 }
 
 const hotels: Hotel[] = [
+  // Kandy Hotels
   {
     id: 'serenity-kandy',
     name: 'Serenity Villa Kandy',
@@ -37,6 +40,34 @@ const hotels: Hotel[] = [
     moodTags: ['soulful-solitude', 'sunrise-sessions']
   },
   {
+    id: 'highland-kandy',
+    name: 'Highland Tea Retreat',
+    tagline: 'Sip tranquility with every sunrise',
+    description: 'A boutique tea estate hotel where guests wake up to mist-covered plantations and experience the art of tea-making firsthand.',
+    image: heroDuvora,
+    rating: 4.7,
+    priceRange: 'Mid-Range Magic',
+    region: 'kandy',
+    tags: ['Tea Experience', 'Cultural Heritage', 'Mountain Escape'],
+    amenities: ['Tea Tasting', 'Cultural Tours', 'Meditation Garden', 'Local Cuisine'],
+    moodTags: ['soulful-solitude', 'sunrise-sessions']
+  },
+  {
+    id: 'royal-kandy',
+    name: 'Royal Kandy Sanctuary',
+    tagline: 'Where ancient royalty meets modern comfort',
+    description: 'A heritage hotel overlooking the Temple of the Tooth, blending royal Sri Lankan architecture with contemporary luxury.',
+    image: soulfulSolitude,
+    rating: 4.8,
+    priceRange: 'Luxury Experience',
+    region: 'kandy',
+    tags: ['Heritage Hotel', 'Temple Views', 'Royal Architecture'],
+    amenities: ['Spa Services', 'Cultural Performances', 'Fine Dining', 'Temple Tours'],
+    moodTags: ['romantic-hideouts', 'soulful-solitude']
+  },
+
+  // Galle Hotels
+  {
     id: 'romantic-galle',
     name: 'Moonlit Galle Retreat',
     tagline: 'Love stories written in ocean breeze',
@@ -50,6 +81,34 @@ const hotels: Hotel[] = [
     moodTags: ['romantic-hideouts', 'coastal-serenity']
   },
   {
+    id: 'fort-galle',
+    name: 'Old Fort Heritage Villa',
+    tagline: 'History whispers in every corner',
+    description: 'A beautifully restored Dutch colonial villa within the UNESCO World Heritage Galle Fort, offering intimate luxury steps from historic ramparts.',
+    image: heroDuvora,
+    rating: 4.9,
+    priceRange: 'Luxury Experience',
+    region: 'galle',
+    tags: ['UNESCO Heritage', 'Colonial Architecture', 'Historic Location'],
+    amenities: ['Heritage Tours', 'Antique Collections', 'Rooftop Terrace', 'Art Gallery'],
+    moodTags: ['romantic-hideouts', 'instagram-worthy']
+  },
+  {
+    id: 'lighthouse-galle',
+    name: 'Lighthouse Bay Resort',
+    tagline: 'Where the ocean meets your dreams',
+    description: 'A contemporary beachfront resort with panoramic Indian Ocean views, perfect for both relaxation and Instagram-worthy moments.',
+    image: romanticHideouts,
+    rating: 4.6,
+    priceRange: 'Mid-Range Magic',
+    region: 'galle',
+    tags: ['Beachfront', 'Ocean Views', 'Modern Design'],
+    amenities: ['Beach Access', 'Water Sports', 'Infinity Pool', 'Sunset Deck'],
+    moodTags: ['coastal-serenity', 'instagram-worthy']
+  },
+
+  // Ella Hotels
+  {
     id: 'instagram-ella',
     name: 'Cloud Nine Ella',
     tagline: 'Every angle tells a story',
@@ -61,6 +120,142 @@ const hotels: Hotel[] = [
     tags: ['Instagram Worthy', 'Tea Plantation Views', 'Adventure Base'],
     amenities: ['Infinity Pool', 'Photo Tours', 'Drone Views', 'Social Media Corner'],
     moodTags: ['instagram-worthy', 'sunrise-sessions']
+  },
+  {
+    id: 'ninearch-ella',
+    name: 'Nine Arch Lodge',
+    tagline: 'Wake up to train whistles and mountain echoes',
+    description: 'A charming eco-lodge overlooking the famous Nine Arch Bridge, where guests can watch trains pass through lush green valleys.',
+    image: heroDuvora,
+    rating: 4.5,
+    priceRange: 'Luxe on a Budget',
+    region: 'ella',
+    tags: ['Eco-Lodge', 'Train Views', 'Bridge Views'],
+    amenities: ['Train Spotting Deck', 'Hiking Trails', 'Local Breakfast', 'Nature Walks'],
+    moodTags: ['instagram-worthy', 'soulful-solitude']
+  },
+  {
+    id: 'peak-ella',
+    name: 'Little Adams Peak Resort',
+    tagline: 'Conquer peaks, capture moments',
+    description: 'Adventure-focused luxury resort at the base of Little Adams Peak, offering guided hikes and stunning sunrise experiences.',
+    image: instagramWorthy,
+    rating: 4.8,
+    priceRange: 'Luxury Experience',
+    region: 'ella',
+    tags: ['Adventure Resort', 'Peak Views', 'Hiking Base'],
+    amenities: ['Guided Hikes', 'Adventure Gear', 'Sunrise Tours', 'Photography Workshops'],
+    moodTags: ['sunrise-sessions', 'instagram-worthy']
+  },
+
+  // Yala Hotels
+  {
+    id: 'safari-yala',
+    name: 'Yala Safari Sanctuary',
+    tagline: 'Where the wild things roam free',
+    description: 'Luxury tented camp in the heart of Yala, offering unparalleled wildlife viewing and the thrill of sleeping under stars with leopard calls as lullabies.',
+    image: jungleMornings,
+    rating: 4.8,
+    priceRange: 'Luxury Experience',
+    region: 'yala',
+    tags: ['Safari Lodge', 'Wildlife Viewing', 'Luxury Tents'],
+    amenities: ['Game Drives', 'Wildlife Photography', 'Bush Dinners', 'Nature Guides'],
+    moodTags: ['jungle-mornings', 'sunrise-sessions']
+  },
+  {
+    id: 'leopard-yala',
+    name: 'Leopard Rock Lodge',
+    tagline: 'Sleep where leopards prowl',
+    description: 'An eco-luxury camp built around ancient rock formations, offering intimate wildlife encounters and sustainable jungle experiences.',
+    image: heroDuvora,
+    rating: 4.6,
+    priceRange: 'Mid-Range Magic',
+    region: 'yala',
+    tags: ['Eco-Lodge', 'Rock Formations', 'Sustainable Tourism'],
+    amenities: ['Eco Tours', 'Bird Watching', 'Rock Climbing', 'Conservation Programs'],
+    moodTags: ['jungle-mornings', 'soulful-solitude']
+  },
+
+  // Mirissa Hotels
+  {
+    id: 'whale-mirissa',
+    name: 'Whale Song Beach Villa',
+    tagline: 'Dance with giants of the deep',
+    description: 'Beachfront villa specializing in whale watching experiences, where the rhythm of waves matches the excitement of spotting blue whales.',
+    image: romanticHideouts,
+    rating: 4.7,
+    priceRange: 'Mid-Range Magic',
+    region: 'mirissa',
+    tags: ['Whale Watching', 'Beachfront', 'Marine Life'],
+    amenities: ['Whale Tours', 'Beach Access', 'Snorkeling Gear', 'Marine Biology Tours'],
+    moodTags: ['coastal-serenity', 'sunrise-sessions']
+  },
+  {
+    id: 'coconut-mirissa',
+    name: 'Coconut Hill Hideaway',
+    tagline: 'Bohemian vibes meet tropical luxury',
+    description: 'Hilltop retreat with panoramic ocean views, perfect for sunset yoga sessions and Instagram-worthy infinity pool shots.',
+    image: instagramWorthy,
+    rating: 4.9,
+    priceRange: 'Luxury Experience',
+    region: 'mirissa',
+    tags: ['Hilltop Views', 'Bohemian Style', 'Sunset Spots'],
+    amenities: ['Infinity Pool', 'Yoga Deck', 'Sunset Bar', 'Beach Shuttle'],
+    moodTags: ['instagram-worthy', 'coastal-serenity']
+  },
+  {
+    id: 'paradise-mirissa',
+    name: 'Paradise Beach Resort',
+    tagline: 'Where every moment feels like vacation',
+    description: 'Family-friendly beachfront resort with vibrant social spaces, perfect for those seeking both relaxation and connection.',
+    image: heroDuvora,
+    rating: 4.4,
+    priceRange: 'Luxe on a Budget',
+    region: 'mirissa',
+    tags: ['Family Friendly', 'Social Spaces', 'Beach Activities'],
+    amenities: ['Kids Club', 'Beach Volleyball', 'Water Sports', 'Social Events'],
+    moodTags: ['coastal-serenity', 'romantic-hideouts']
+  },
+
+  // Sigiriya Hotels
+  {
+    id: 'rock-sigiriya',
+    name: 'Ancient Rock Resort',
+    tagline: 'Wake up to 1500 years of history',
+    description: 'Luxury resort with direct views of Sigiriya Rock, offering exclusive sunrise climbing experiences and archaeological insights.',
+    image: heroDuvora,
+    rating: 4.8,
+    priceRange: 'Luxury Experience',
+    region: 'sigiriya',
+    tags: ['Rock Views', 'Archaeological Tours', 'Sunrise Climbs'],
+    amenities: ['Private Guides', 'Sunrise Tours', 'Archaeological Insights', 'Cultural Performances'],
+    moodTags: ['sunrise-sessions', 'soulful-solitude']
+  },
+  {
+    id: 'dambulla-sigiriya',
+    name: 'Dambulla Cave Sanctuary',
+    tagline: 'Sleep among ancient wonders',
+    description: 'Boutique hotel near the famous cave temples, blending spiritual tranquility with modern comfort.',
+    image: soulfulSolitude,
+    rating: 4.6,
+    priceRange: 'Mid-Range Magic',
+    region: 'sigiriya',
+    tags: ['Cave Temples', 'Spiritual Retreat', 'Cultural Heritage'],
+    amenities: ['Temple Tours', 'Meditation Sessions', 'Cultural Workshops', 'Ayurvedic Spa'],
+    moodTags: ['soulful-solitude', 'sunrise-sessions']
+  },
+  {
+    id: 'fortress-sigiriya',
+    name: 'Sky Fortress Eco Lodge',
+    tagline: 'Elevated experiences in ancient lands',
+    description: 'Eco-friendly treehouse lodge offering unique elevated accommodations with panoramic views of the cultural triangle.',
+    image: jungleMornings,
+    rating: 4.5,
+    priceRange: 'Luxe on a Budget',
+    region: 'sigiriya',
+    tags: ['Eco-Lodge', 'Treehouse', 'Cultural Triangle'],
+    amenities: ['Elevated Views', 'Eco Tours', 'Bird Watching', 'Sustainable Practices'],
+    moodTags: ['jungle-mornings', 'instagram-worthy']
   }
 ];
 

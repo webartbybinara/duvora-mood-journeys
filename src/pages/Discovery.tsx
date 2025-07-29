@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MoodSelector } from '@/components/MoodSelector';
 import { RegionSelector } from '@/components/RegionSelector';
 import { HotelListings } from '@/components/HotelListings';
@@ -8,6 +9,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 type DiscoveryStep = 'mood' | 'region' | 'hotels';
 
 export default function Discovery() {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<DiscoveryStep>('mood');
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -35,8 +37,7 @@ export default function Discovery() {
   };
 
   const handleHotelSelect = (hotelId: string) => {
-    // Here you would navigate to the individual hotel page
-    console.log('Selected hotel:', hotelId);
+    navigate(`/hotel/${hotelId}`);
   };
 
   const handleBackToMoods = () => {
