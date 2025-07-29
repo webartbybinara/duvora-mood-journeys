@@ -193,9 +193,9 @@ export default function HotelDetail() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
         {/* Image Gallery */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
           <div className="lg:col-span-3">
-            <div className="relative aspect-[16/10] lg:aspect-[16/9] rounded-xl overflow-hidden">
+            <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] rounded-xl overflow-hidden">
               <img
                 src={images[selectedImage]}
                 alt={hotel.name}
@@ -203,7 +203,7 @@ export default function HotelDetail() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-5 lg:grid-cols-1 gap-2 lg:gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-1 gap-2 lg:gap-3">
             {images.slice(0, 5).map((image, index) => (
               <button
                 key={index}
