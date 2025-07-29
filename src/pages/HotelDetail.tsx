@@ -20,7 +20,9 @@ import {
   Users,
   Clock,
   Check,
-  ExternalLink
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 import soulfulSolitude from '@/assets/soulful-solitude.jpg';
@@ -192,29 +194,69 @@ export default function HotelDetail() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
-        {/* Image Gallery */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 lg:mb-8">
-          <div className="lg:col-span-3">
+        {/* Image Slider */}
+        <div className="mb-6 lg:mb-8">
+          <div className="relative">
+            {/* Main Image */}
             <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] rounded-xl overflow-hidden">
               <img
                 src={images[selectedImage]}
                 alt={hotel.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-300"
               />
+              
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => setSelectedImage(selectedImage === 0 ? images.length - 1 : selectedImage - 1)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-200 group"
+              >
+                <ChevronLeft className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+              </button>
+              
+              <button
+                onClick={() => setSelectedImage(selectedImage === images.length - 1 ? 0 : selectedImage + 1)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full p-2 transition-all duration-200 group"
+              >
+                <ChevronRight className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+              </button>
+
+              {/* Image Counter */}
+              <div className="absolute top-3 right-3 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+                {selectedImage + 1} / {images.length}
+              </div>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center mt-4 gap-2">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                    selectedImage === index 
+                      ? 'bg-primary w-6' 
+                      : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                  }`}
+                />
+              ))}
             </div>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-1 gap-2 lg:gap-3">
-            {images.slice(0, 5).map((image, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedImage(index)}
-                className={`relative aspect-square rounded-lg overflow-hidden transition-all ${
-                  selectedImage === index ? 'ring-2 ring-primary' : 'hover:scale-105'
-                }`}
-              >
-                <img src={image} alt="" className="w-full h-full object-cover" />
-              </button>
-            ))}
+
+          {/* Thumbnail Strip */}
+          <div className="mt-4 overflow-x-auto">
+            <div className="flex gap-2 pb-2">
+              {images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(index)}
+                  className={`relative aspect-square w-16 sm:w-20 flex-shrink-0 rounded-lg overflow-hidden transition-all ${
+                    selectedImage === index ? 'ring-2 ring-primary' : 'hover:scale-105'
+                  }`}
+                >
+                  <img src={image} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
