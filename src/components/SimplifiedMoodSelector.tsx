@@ -1,48 +1,48 @@
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Heart, Camera, TreePine, Waves } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-import jungleMornings from '@/assets/jungle-mornings.jpg';
-import romanticHideouts from '@/assets/romantic-hideouts.jpg';
-import instagramWorthy from '@/assets/instagram-worthy.jpg';
-import soulfulSolitude from '@/assets/soulful-solitude.jpg';
-
-interface Mood {
+interface MoodOption {
   id: string;
   name: string;
+  emoji: string;
   description: string;
-  image: string;
-  icon: any;
 }
 
-const moods: Mood[] = [
+const moodOptions: MoodOption[] = [
+  {
+    id: 'soulful-solitude',
+    name: 'Solitude',
+    emoji: '🧘',
+    description: 'Peaceful & reflective'
+  },
   {
     id: 'romantic-hideouts',
     name: 'Romance',
-    description: 'Intimate moments and cozy hideaways',
-    image: romanticHideouts,
-    icon: Heart,
-  },
-  {
-    id: 'instagram-worthy',
-    name: 'Adventure',
-    description: 'Picture-perfect moments and exciting experiences',
-    image: instagramWorthy,
-    icon: Camera,
-  },
-  {
-    id: 'soulful-solitude',
-    name: 'Peaceful',
-    description: 'Quiet contemplation and mindful relaxation',
-    image: soulfulSolitude,
-    icon: TreePine,
+    emoji: '💕',
+    description: 'Intimate & cozy'
   },
   {
     id: 'coastal-serenity',
-    name: 'Beach',
-    description: 'Ocean waves and coastal serenity',
-    image: jungleMornings, // Using available image
-    icon: Waves,
+    name: 'Coastal',
+    emoji: '🌊',
+    description: 'Beach & ocean'
+  },
+  {
+    id: 'instagram-worthy',
+    name: 'Scenic',
+    emoji: '📸',
+    description: 'Picture perfect'
+  },
+  {
+    id: 'sunrise-sessions',
+    name: 'Adventure',
+    emoji: '🌅',
+    description: 'Active & exploratory'
+  },
+  {
+    id: 'jungle-mornings',
+    name: 'Wildlife',
+    emoji: '🦎',
+    description: 'Nature & safari'
   }
 ];
 
@@ -53,50 +53,29 @@ interface SimplifiedMoodSelectorProps {
 
 export function SimplifiedMoodSelector({ selectedMood, onMoodSelect }: SimplifiedMoodSelectorProps) {
   return (
-    <div className="mb-12">
-      <h2 className="text-2xl font-light text-foreground mb-6 text-center">
-        What's your travel mood?
-      </h2>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {moods.map((mood) => {
-          const isSelected = selectedMood === mood.id;
-          const Icon = mood.icon;
-
-          return (
-            <Card
-              key={mood.id}
-              className={`cursor-pointer transition-all duration-300 overflow-hidden group ${
-                isSelected 
-                  ? 'ring-2 ring-primary shadow-lg scale-[1.02]' 
-                  : 'hover:shadow-md hover:scale-[1.01]'
-              }`}
-              onClick={() => onMoodSelect(mood.id)}
-            >
-              <div className="relative aspect-square">
-                <img
-                  src={mood.image}
-                  alt={mood.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
-                  <Icon className={`w-8 h-8 mb-2 ${isSelected ? 'text-primary' : ''}`} />
-                  <h3 className="font-medium text-center">{mood.name}</h3>
-                  <p className="text-xs text-white/80 text-center mt-1 hidden sm:block">
-                    {mood.description}
-                  </p>
-                </div>
-                {isSelected && (
-                  <div className="absolute top-2 right-2">
-                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                      <div className="w-2 h-2 bg-white rounded-full" />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Card>
-          );
-        })}
+    <div className="space-y-6">
+      <div className="text-center">
+        <h2 className="text-2xl font-medium text-foreground mb-2">What's your mood?</h2>
+        <p className="text-muted-foreground">Choose what you're looking for</p>
+      </div>
+      
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        {moodOptions.map((mood) => (
+          <button
+            key={mood.id}
+            onClick={() => onMoodSelect(mood.id)}
+            className={cn(
+              "p-4 rounded-lg border transition-all duration-200 text-left group hover:border-primary",
+              selectedMood === mood.id
+                ? "border-primary bg-primary/5"
+                : "border-border bg-background hover:bg-muted/50"
+            )}
+          >
+            <div className="text-2xl mb-2">{mood.emoji}</div>
+            <div className="text-sm font-medium mb-1">{mood.name}</div>
+            <div className="text-xs text-muted-foreground">{mood.description}</div>
+          </button>
+        ))}
       </div>
     </div>
   );

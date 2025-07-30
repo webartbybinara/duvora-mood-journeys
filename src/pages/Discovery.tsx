@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { EnhancedMoodSelector } from '@/components/EnhancedMoodSelector';
-import { EnhancedRegionSelector } from '@/components/EnhancedRegionSelector';
-import { EnhancedHotelCard } from '@/components/EnhancedHotelCard';
-import { TravelPersonalityProfile } from '@/components/TravelPersonalityProfile';
-import { MoodMixer } from '@/components/MoodMixer';
+import { SimplifiedMoodSelector } from '@/components/SimplifiedMoodSelector';
+import { SimplifiedRegionSelector } from '@/components/SimplifiedRegionSelector';
+import { SimplifiedHotelCard } from '@/components/SimplifiedHotelCard';
 import { Navigation } from '@/components/Navigation';
 
 // Import hotel data from HotelListings
@@ -173,8 +171,6 @@ export default function Discovery() {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
-  const [viewedHotels, setViewedHotels] = useState<string[]>([]);
-  const [showMoodMixer, setShowMoodMixer] = useState(false);
 
   const handleMoodSelect = (moodId: string) => {
     setSelectedMood(moodId);
@@ -186,7 +182,6 @@ export default function Discovery() {
   };
 
   const handleHotelSelect = (hotelId: string) => {
-    setViewedHotels(prev => [...new Set([...prev, hotelId])]);
     navigate(`/hotel/${hotelId}`);
   };
 
@@ -218,53 +213,35 @@ export default function Discovery() {
   return (
     <>
       <Navigation />
-      <main className="pt-16 min-h-screen bg-gradient-serene">
-        <div className="container-xl py-8">
+      <main className="pt-16 min-h-screen bg-background">
+        <div className="container mx-auto max-w-4xl px-4 py-12">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-light text-foreground mb-4">
-              Discover Your Perfect Stay
+            <h1 className="text-3xl md:text-4xl font-medium text-foreground mb-4">
+              Find Your Stay
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-              Find the ideal accommodation that matches your travel mood and desired destination in Sri Lanka.
+            <p className="text-muted-foreground max-w-lg mx-auto mb-8">
+              Discover the perfect accommodation in Sri Lanka
             </p>
             {(selectedMood || selectedRegion) && (
-              <Button variant="outline" onClick={handleStartOver} className="mb-8">
-                Start Over
+              <Button variant="outline" onClick={handleStartOver} size="sm">
+                Reset
               </Button>
             )}
           </div>
 
-        <div className="grid lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-3 space-y-8">
+          <div className="space-y-12">
             {/* Step 1: Mood Selection */}
             {!selectedMood && (
-              <div className="space-y-6">
-                <EnhancedMoodSelector
-                  selectedMood={selectedMood}
-                  onMoodSelect={handleMoodSelect}
-                />
-                
-                <div className="text-center">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowMoodMixer(!showMoodMixer)}
-                    className="font-dancing text-lg"
-                  >
-                    🎨 Try Mood Mixer Instead
-                  </Button>
-                </div>
-                
-                {showMoodMixer && (
-                  <MoodMixer onMoodMix={(mood) => handleMoodSelect(mood)} />
-                )}
-              </div>
+              <SimplifiedMoodSelector
+                selectedMood={selectedMood}
+                onMoodSelect={handleMoodSelect}
+              />
             )}
 
             {/* Step 2: Region Selection */}
             {selectedMood && !selectedRegion && (
-              <EnhancedRegionSelector
-                selectedMood={selectedMood}
+              <SimplifiedRegionSelector
                 selectedRegion={selectedRegion}
                 onRegionSelect={handleRegionSelect}
               />
@@ -273,51 +250,35 @@ export default function Discovery() {
             {/* Step 3: Hotel Results */}
             {selectedMood && selectedRegion && (
               <div className="space-y-8">
-                <div className="text-center space-y-4">
-                  <h2 className="font-playfair text-4xl md:text-5xl font-bold bg-gradient-tropical bg-clip-text text-transparent">
-                    Your Perfect Matches
+                <div className="text-center">
+                  <h2 className="text-2xl font-medium text-foreground mb-2">
+                    Available Hotels
                   </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Handpicked experiences that resonate with your {selectedMood} soul in {selectedRegion}
+                  <p className="text-muted-foreground">
+                    Hotels in {selectedRegion}
                   </p>
                 </div>
 
                 {filteredHotels.length > 0 ? (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredHotels.map((hotel) => (
-                      <EnhancedHotelCard
+                      <SimplifiedHotelCard
                         key={hotel.id}
                         hotel={hotel}
-                        selectedMood={selectedMood}
-                        selectedRegion={selectedRegion}
-                        isRecommended={true}
                         onClick={() => handleHotelSelect(hotel.id)}
                       />
                     ))}
                   </div>
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-muted-foreground mb-4">
-                      No hotels found for your selection. Try a different combination!
+                    <p className="text-muted-foreground">
+                      No hotels found. Try a different selection.
                     </p>
                   </div>
                 )}
               </div>
             )}
           </div>
-
-          {/* Sidebar: Travel Personality Profile */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-6">
-              <TravelPersonalityProfile
-                selectedMood={selectedMood}
-                selectedRegion={selectedRegion}
-                viewedHotels={viewedHotels}
-                onStartOver={handleStartOver}
-              />
-            </div>
-          </div>
-        </div>
         </div>
       </main>
     </>

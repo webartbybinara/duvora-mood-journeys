@@ -1,74 +1,55 @@
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Star, MapPin } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 interface Hotel {
   id: string;
   name: string;
   tagline: string;
+  description: string;
   image: string;
   rating: number;
   priceRange: string;
   region: string;
   tags: string[];
+  amenities: string[];
+  moodTags: string[];
 }
 
 interface SimplifiedHotelCardProps {
   hotel: Hotel;
-  isRecommended?: boolean;
   onClick: () => void;
 }
 
-export function SimplifiedHotelCard({ hotel, isRecommended, onClick }: SimplifiedHotelCardProps) {
+export function SimplifiedHotelCard({ hotel, onClick }: SimplifiedHotelCardProps) {
   return (
-    <Card 
-      className="cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.01] overflow-hidden group"
+    <button
       onClick={onClick}
+      className="group text-left w-full rounded-lg border border-border bg-background hover:border-primary transition-all duration-200 overflow-hidden"
     >
-      <div className="relative aspect-[16/10]">
+      <div className="aspect-[4/3] overflow-hidden">
         <img
           src={hotel.image}
           alt={hotel.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        
-        {/* Overlay content */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        
-        {/* Top badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          {isRecommended && (
-            <Badge className="bg-primary text-primary-foreground text-xs">
-              Perfect Match
-            </Badge>
-          )}
-          <Badge variant="secondary" className="bg-white/20 backdrop-blur-sm text-white border-white/30 text-xs">
-            {hotel.priceRange}
-          </Badge>
-        </div>
-
-        {/* Rating */}
-        <div className="absolute top-3 right-3">
-          <div className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-            <Star className="w-3 h-3 text-yellow-400 fill-current" />
-            <span className="text-white text-xs font-medium">{hotel.rating}</span>
+      </div>
+      
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-medium text-foreground">{hotel.name}</h3>
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <Star className="w-3 h-3 fill-current" />
+            {hotel.rating}
           </div>
         </div>
-
-        {/* Hotel info */}
-        <div className="absolute bottom-3 left-3 right-3">
-          <h3 className="text-white font-medium text-lg mb-1 line-clamp-1">
-            {hotel.name}
-          </h3>
-          <p className="text-white/90 text-sm mb-2 line-clamp-1 italic">
-            {hotel.tagline}
-          </p>
-          <div className="flex items-center gap-1 text-white/80">
-            <MapPin className="w-3 h-3" />
-            <span className="text-xs capitalize">{hotel.region}</span>
-          </div>
+        
+        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+          {hotel.description}
+        </p>
+        
+        <div className="text-xs font-medium text-primary">
+          {hotel.priceRange}
         </div>
       </div>
-    </Card>
+    </button>
   );
 }
