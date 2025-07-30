@@ -93,6 +93,7 @@ export default {
 				'4xl': 'var(--space-4xl)'
 			},
 			fontFamily: {
+				'sans': ['Poppins', 'system-ui', 'sans-serif'],
 				'playfair': ['Playfair Display', 'serif'],
 				'dancing': ['Dancing Script', 'cursive'],
 			},

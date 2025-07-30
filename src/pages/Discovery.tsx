@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { SimplifiedMoodSelector } from '@/components/SimplifiedMoodSelector';
-import { SimplifiedRegionSelector } from '@/components/SimplifiedRegionSelector';
-import { SimplifiedHotelCard } from '@/components/SimplifiedHotelCard';
+import { EnhancedMoodSelector } from '@/components/EnhancedMoodSelector';
+import { EnhancedRegionSelector } from '@/components/EnhancedRegionSelector';
+import { EnhancedHotelCard } from '@/components/EnhancedHotelCard';
+import { TravelPersonalityProfile } from '@/components/TravelPersonalityProfile';
+import { MoodMixer } from '@/components/MoodMixer';
 import { Navigation } from '@/components/Navigation';
 
 // Import hotel data from HotelListings
@@ -171,6 +173,8 @@ export default function Discovery() {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [filteredHotels, setFilteredHotels] = useState<Hotel[]>([]);
+  const [viewedHotels, setViewedHotels] = useState<string[]>([]);
+  const [showMoodMixer, setShowMoodMixer] = useState(false);
 
   const handleMoodSelect = (moodId: string) => {
     setSelectedMood(moodId);
@@ -182,6 +186,7 @@ export default function Discovery() {
   };
 
   const handleHotelSelect = (hotelId: string) => {
+    setViewedHotels(prev => [...new Set([...prev, hotelId])]);
     navigate(`/hotel/${hotelId}`);
   };
 
