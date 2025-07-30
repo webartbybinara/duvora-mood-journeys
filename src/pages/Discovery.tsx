@@ -235,51 +235,89 @@ export default function Discovery() {
             )}
           </div>
 
-          {/* Mood Selection */}
-          <SimplifiedMoodSelector
-            selectedMood={selectedMood}
-            onMoodSelect={handleMoodSelect}
-          />
-
-          {/* Region Selection - only show if mood is selected */}
-          {selectedMood && (
-            <SimplifiedRegionSelector
-              selectedMood={selectedMood}
-              selectedRegion={selectedRegion}
-              onRegionSelect={handleRegionSelect}
-            />
-          )}
-
-          {/* Hotel Results - only show if both mood and region are selected */}
-          {selectedMood && selectedRegion && filteredHotels.length > 0 && (
-            <div>
-              <h2 className="text-2xl font-light text-foreground mb-6 text-center">
-                Perfect stays for you
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredHotels.map((hotel, index) => (
-                  <SimplifiedHotelCard
-                    key={hotel.id}
-                    hotel={hotel}
-                    isRecommended={hotel.moodTags.includes(selectedMood)}
-                    onClick={() => handleHotelSelect(hotel.id)}
-                  />
-                ))}
+        <div className="grid lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-3 space-y-8">
+            {/* Step 1: Mood Selection */}
+            {!selectedMood && (
+              <div className="space-y-6">
+                <EnhancedMoodSelector
+                  selectedMood={selectedMood}
+                  onMoodSelect={handleMoodSelect}
+                />
+                
+                <div className="text-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowMoodMixer(!showMoodMixer)}
+                    className="font-dancing text-lg"
+                  >
+                    🎨 Try Mood Mixer Instead
+                  </Button>
+                </div>
+                
+                {showMoodMixer && (
+                  <MoodMixer onMoodMix={(mood) => handleMoodSelect(mood)} />
+                )}
               </div>
-            </div>
-          )}
+            )}
 
-          {/* No results message */}
-          {selectedMood && selectedRegion && filteredHotels.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-lg text-muted-foreground mb-4">
-                No stays found for this combination. Try a different region!
-              </p>
-              <Button variant="outline" onClick={() => setSelectedRegion(null)}>
-                Choose Different Region
-              </Button>
+            {/* Step 2: Region Selection */}
+            {selectedMood && !selectedRegion && (
+              <EnhancedRegionSelector
+                selectedMood={selectedMood}
+                selectedRegion={selectedRegion}
+                onRegionSelect={handleRegionSelect}
+              />
+            )}
+
+            {/* Step 3: Hotel Results */}
+            {selectedMood && selectedRegion && (
+              <div className="space-y-8">
+                <div className="text-center space-y-4">
+                  <h2 className="font-playfair text-4xl md:text-5xl font-bold bg-gradient-tropical bg-clip-text text-transparent">
+                    Your Perfect Matches
+                  </h2>
+                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Handpicked experiences that resonate with your {selectedMood} soul in {selectedRegion}
+                  </p>
+                </div>
+
+                {filteredHotels.length > 0 ? (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredHotels.map((hotel) => (
+                      <EnhancedHotelCard
+                        key={hotel.id}
+                        hotel={hotel}
+                        selectedMood={selectedMood}
+                        selectedRegion={selectedRegion}
+                        isRecommended={true}
+                        onClick={() => handleHotelSelect(hotel.id)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-muted-foreground mb-4">
+                      No hotels found for your selection. Try a different combination!
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar: Travel Personality Profile */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-6">
+              <TravelPersonalityProfile
+                selectedMood={selectedMood}
+                selectedRegion={selectedRegion}
+                viewedHotels={viewedHotels}
+                onStartOver={handleStartOver}
+              />
             </div>
-          )}
+          </div>
+        </div>
         </div>
       </main>
     </>
